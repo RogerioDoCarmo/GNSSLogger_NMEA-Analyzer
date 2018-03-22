@@ -8,6 +8,7 @@ package Visao;
 import Controlador.ControladorTeste;
 import java.io.File;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -36,6 +37,7 @@ public class GUI_Principal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         menuOpenLog = new javax.swing.JMenuItem();
         menuExtrairGPGGA = new javax.swing.JMenuItem();
+        menuOpenNMEA = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -58,6 +60,14 @@ public class GUI_Principal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(menuExtrairGPGGA);
+
+        menuOpenNMEA.setText("Abrir NMEA processado");
+        menuOpenNMEA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuOpenNMEAActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuOpenNMEA);
 
         jMenuBar1.add(jMenu1);
 
@@ -86,7 +96,7 @@ public class GUI_Principal extends javax.swing.JFrame {
         
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Abra o arquivo gerado pelo GNSS Logger");
-         fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
         fileChooser.removeChoosableFileFilter(fileChooser.getChoosableFileFilters()[0]);
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("TXT (*.txt)", extensao));
         
@@ -103,6 +113,28 @@ public class GUI_Principal extends javax.swing.JFrame {
        GUI_Resultado novaTela = new GUI_Resultado(this,true);
        novaTela.setVisible(true);
     }//GEN-LAST:event_menuExtrairGPGGAActionPerformed
+
+    private void menuOpenNMEAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuOpenNMEAActionPerformed
+        JOptionPane.showMessageDialog(this,"Abra o arquivo .nmea gerado pelo GNSS Analysis App.");
+        
+        String fileName = null;
+        String extensao = "nmea";
+        
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Abra o arquivo gerado pelo GNSS Analysis App");
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        fileChooser.removeChoosableFileFilter(fileChooser.getChoosableFileFilters()[0]);
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("nmea (*.nmea)", extensao));
+        
+        int userSelection = fileChooser.showOpenDialog(null);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            fileName = fileToSave.getAbsolutePath();
+        }
+        
+        ControladorTeste.getInstance().abrirLog(fileName);
+        
+    }//GEN-LAST:event_menuOpenNMEAActionPerformed
 
     /**
      * @param args the command line arguments
@@ -145,5 +177,6 @@ public class GUI_Principal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem menuExtrairGPGGA;
     private javax.swing.JMenuItem menuOpenLog;
+    private javax.swing.JMenuItem menuOpenNMEA;
     // End of variables declaration//GEN-END:variables
 }
