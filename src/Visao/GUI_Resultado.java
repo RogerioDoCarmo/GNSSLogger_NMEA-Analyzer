@@ -34,14 +34,14 @@ public class GUI_Resultado extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Lista = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Resultado");
 
-        jLabel1.setText("TITULO");
+        lblTitulo.setText("TITULO");
 
         jScrollPane1.setViewportView(Lista);
 
@@ -53,7 +53,7 @@ public class GUI_Resultado extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(lblTitulo)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE))
                 .addContainerGap())
@@ -62,7 +62,7 @@ public class GUI_Resultado extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(lblTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
                 .addContainerGap())
@@ -115,12 +115,13 @@ public class GUI_Resultado extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> Lista;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblTitulo;
     // End of variables declaration//GEN-END:variables
 
     private void carregarValores() {
-        ArrayList<String> medicoes = ControladorTeste.getInstance().getGPGGA();
+        lblTitulo.setText(ControladorTeste.getInstance().getGPGGA().getLabel());
+        ArrayList<String> medicoes = ControladorTeste.getInstance().getGPGGA().getDados();
         DefaultListModel listModel = new DefaultListModel();
         
         for (String medicao : medicoes) {
