@@ -6,6 +6,7 @@
 package Visao;
 
 import Controlador.ControladorTeste;
+import Controlador.Tipos_Operacoes;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 
@@ -18,11 +19,11 @@ public class GUI_Resultado extends javax.swing.JDialog {
     /**
      * Creates new form GUI_Resultado
      */
-    public GUI_Resultado(java.awt.Frame parent, boolean modal) {
+    public GUI_Resultado(java.awt.Frame parent, boolean modal, Tipos_Operacoes operacao) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
-        carregarValores();
+        carregarValores(operacao);
     }
 
     /**
@@ -100,8 +101,9 @@ public class GUI_Resultado extends javax.swing.JDialog {
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                GUI_Resultado dialog = new GUI_Resultado(new javax.swing.JFrame(), true);
+            public void run() {                
+               // super(new javax.swing.JFrame(), true);
+                GUI_Resultado dialog = new GUI_Resultado(new javax.swing.JFrame(), true, Tipos_Operacoes.$GPGGA);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -119,9 +121,20 @@ public class GUI_Resultado extends javax.swing.JDialog {
     private javax.swing.JLabel lblTitulo;
     // End of variables declaration//GEN-END:variables
 
-    private void carregarValores() {
-        lblTitulo.setText(ControladorTeste.getInstance().getGPGGA().getLabel());
-        ArrayList<String> medicoes = ControladorTeste.getInstance().getGPGGA().getDados();
+    private void carregarValores(Tipos_Operacoes operacao) {
+        ArrayList<String> medicoes = null;
+        switch (operacao){
+            case $GPGGA:
+                 lblTitulo.setText(ControladorTeste.getInstance().getGPGGA().getLabel());
+                 medicoes = ControladorTeste.getInstance().getGPGGA().getDados();
+            break;
+            case $PGLOR:
+                 lblTitulo.setText(ControladorTeste.getInstance().getPGLOR().getLabel());
+                 medicoes = ControladorTeste.getInstance().getPGLOR().getDados();
+            break;
+        }
+        
+       
         DefaultListModel listModel = new DefaultListModel();
         
         for (String medicao : medicoes) {
