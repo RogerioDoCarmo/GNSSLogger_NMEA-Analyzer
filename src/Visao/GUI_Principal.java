@@ -6,6 +6,7 @@
 package Visao;
 
 import Controlador.ControladorTeste;
+import Controlador.Tipos_Operacoes;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -37,8 +38,9 @@ public class GUI_Principal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         menuOpenLog = new javax.swing.JMenuItem();
         menuExtrairGPGGA = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        menuExtrairPGLOR = new javax.swing.JMenuItem();
         menuOpenNMEA = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GNSS Logger - NMEA Analyzer");
@@ -61,6 +63,18 @@ public class GUI_Principal extends javax.swing.JFrame {
         });
         jMenu1.add(menuExtrairGPGGA);
 
+        jMenu3.setText("Extrair medições NMEA");
+
+        menuExtrairPGLOR.setText("Extrair $PGLOR");
+        menuExtrairPGLOR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuExtrairPGLORActionPerformed(evt);
+            }
+        });
+        jMenu3.add(menuExtrairPGLOR);
+
+        jMenu1.add(jMenu3);
+
         menuOpenNMEA.setText("Abrir NMEA processado");
         menuOpenNMEA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -70,9 +84,6 @@ public class GUI_Principal extends javax.swing.JFrame {
         jMenu1.add(menuOpenNMEA);
 
         jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
 
@@ -110,7 +121,7 @@ public class GUI_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuOpenLogActionPerformed
 
     private void menuExtrairGPGGAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtrairGPGGAActionPerformed
-       GUI_Resultado novaTela = new GUI_Resultado(this,true);
+       GUI_Resultado novaTela = new GUI_Resultado(this,true,Tipos_Operacoes.$GPGGA);
        novaTela.setVisible(true);
     }//GEN-LAST:event_menuExtrairGPGGAActionPerformed
 
@@ -135,6 +146,11 @@ public class GUI_Principal extends javax.swing.JFrame {
         ControladorTeste.getInstance().abrirLog(fileName);
         
     }//GEN-LAST:event_menuOpenNMEAActionPerformed
+
+    private void menuExtrairPGLORActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtrairPGLORActionPerformed
+       GUI_Resultado novaTela = new GUI_Resultado(this,true,Tipos_Operacoes.$PGLOR);
+       novaTela.setVisible(true);
+    }//GEN-LAST:event_menuExtrairPGLORActionPerformed
 
     /**
      * @param args the command line arguments
@@ -173,9 +189,10 @@ public class GUI_Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem menuExtrairGPGGA;
+    private javax.swing.JMenuItem menuExtrairPGLOR;
     private javax.swing.JMenuItem menuOpenLog;
     private javax.swing.JMenuItem menuOpenNMEA;
     // End of variables declaration//GEN-END:variables
