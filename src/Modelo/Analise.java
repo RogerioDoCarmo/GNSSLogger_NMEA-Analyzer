@@ -55,8 +55,116 @@ public class Analise {
         return medicoesGPGGA;
     }
     
+    public ArrayList<String> extrairMedicoesPGLOR(){
+        this.medicoesGPGGA = new ArrayList<>();
+        
+        for (String medicoesTemp : medicoesNMEA) {
+            if (medicoesTemp.contains("$PGLOR"))
+                medicoesGPGGA.add(medicoesTemp);
+        }
+        return medicoesGPGGA;
+    }
+    
+    public ArrayList<String> extrairMedicoesGPGSV(){
+        this.medicoesGPGGA = new ArrayList<>();
+        
+        for (String medicoesTemp : medicoesNMEA) {
+            if (medicoesTemp.contains("$GPGSV"))
+                medicoesGPGGA.add(medicoesTemp);
+        }
+        return medicoesGPGGA;
+    }
+    
+    public ArrayList<String> extrairMedicoesGLGSV(){
+        this.medicoesGPGGA = new ArrayList<>();
+        
+        for (String medicoesTemp : medicoesNMEA) {
+            if (medicoesTemp.contains("$GLGSV"))
+                medicoesGPGGA.add(medicoesTemp);
+        }
+        return medicoesGPGGA;
+    }
+    
+    public ArrayList<String> extrairMedicoesBDGSV(){
+        this.medicoesGPGGA = new ArrayList<>();
+        
+        for (String medicoesTemp : medicoesNMEA) {
+            if (medicoesTemp.contains("$BDGSV"))
+                medicoesGPGGA.add(medicoesTemp);
+        }
+        return medicoesGPGGA;
+    }
+    
+    public ArrayList<String> extrairMedicoesGPGSA(){
+        this.medicoesGPGGA = new ArrayList<>();
+        
+        for (String medicoesTemp : medicoesNMEA) {
+            if (medicoesTemp.contains("$GPGSA"))
+                medicoesGPGGA.add(medicoesTemp);
+        }
+        return medicoesGPGGA;
+    }
 
+    public ArrayList<String> extrairMedicoesGNGSA(){
+        this.medicoesGPGGA = new ArrayList<>();
+        
+        for (String medicoesTemp : medicoesNMEA) {
+            if (medicoesTemp.contains("$GNGSA"))
+                medicoesGPGGA.add(medicoesTemp);
+        }
+        return medicoesGPGGA;
+    }
 
+    public ArrayList<String> extrairMedicoesQZGSA(){
+        this.medicoesGPGGA = new ArrayList<>();
+        
+        for (String medicoesTemp : medicoesNMEA) {
+            if (medicoesTemp.contains("$QZGSA"))
+                medicoesGPGGA.add(medicoesTemp);
+        }
+        return medicoesGPGGA;
+    }
+    
+    public ArrayList<String> extrairMedicoesIMGSA(){
+        this.medicoesGPGGA = new ArrayList<>();
+        
+        for (String medicoesTemp : medicoesNMEA) {
+            if (medicoesTemp.contains("$IMGSA"))
+                medicoesGPGGA.add(medicoesTemp);
+        }
+        return medicoesGPGGA;
+    }
+    
+    public ArrayList<String> extrairMedicoesBDGSA(){
+        this.medicoesGPGGA = new ArrayList<>();
+        
+        for (String medicoesTemp : medicoesNMEA) {
+            if (medicoesTemp.contains("$BDGSA"))
+                medicoesGPGGA.add(medicoesTemp);
+        }
+        return medicoesGPGGA;
+    }
+    
+    public ArrayList<String> extrairMedicoesGAGSA(){
+        this.medicoesGPGGA = new ArrayList<>();
+        
+        for (String medicoesTemp : medicoesNMEA) {
+            if (medicoesTemp.contains("$BDGSA"))
+                medicoesGPGGA.add(medicoesTemp);
+        }
+        return medicoesGPGGA;
+    }
+    
+    public ArrayList<String> extrairMedicoesGPRMC(){
+        this.medicoesGPGGA = new ArrayList<>();
+        
+        for (String medicoesTemp : medicoesNMEA) {
+            if (medicoesTemp.contains("$GPRMC"))
+                medicoesGPGGA.add(medicoesTemp);
+        }
+        return medicoesGPGGA;
+    }
+    
     public void compararValores(String arquivoOriginal, String arquivoProcessado){
         String cvsSplitBy = ",";
         String line = "";
