@@ -30,9 +30,10 @@ public class Analise {
     
     public Analise(String caminhoArquivo) {
         this.medicoesNMEA = new ArrayList<>();
-        lerTXT(caminhoArquivo);
-        extrairGPGGA();
+        this.medicoesGPGGA = new ArrayList<>();
         this.NUM_MEDICOES = 0;
+        lerTXT(caminhoArquivo);
+        extrairGPGGA();        
     }
     
     public void extrairGPGGA(){
@@ -42,12 +43,8 @@ public class Analise {
         }
     }
     
-    public ArrayList<String> extrairMedicoesGPGGA(){
-        this.medicoesGPGGA = new ArrayList<>();
-        
-        extrairGPGGA();
-        
-        return medicoesGPGGA;
+    public ArrayList<String> extrairMedicoesGPGGA(){        
+        return (this.medicoesGPGGA);
     }
     
     public ArrayList<String> extrairMedicoes(String tipoNMEA){
@@ -212,38 +209,6 @@ public class Analise {
         } catch (Exception e) {
             return false;
         }
-    }
-
-    public float[] getColuna(int indiceColuna) {
-        float[] dados = new float[NUM_INSTANCIAS];
-
-        if (indiceColuna < 0 || indiceColuna > NUM_ATRIBUTOS - 1) {
-            try {
-                throw new Exception("Índice inválido!");
-            } catch (Exception ex) {
-                Logger.getLogger(Analise.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-        if (!isFloat(medicoesNMEA.get(0).toString())) {
-            try {
-                throw new Exception("A coluna escolhida não é do tipo numérico!");
-            } catch (Exception ex) {
-                Logger.getLogger(Analise.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-        for (int i = 0; i < NUM_INSTANCIAS; i++) {
-            float valorAtual = Float.valueOf(medicoesNMEA.get(i).toString());
-            dados[i] = valorAtual;
-        }
-
-        System.out.println("Dados:");
-        for (int i = 0; i < dados.length; i++) {
-            System.out.println(dados[i]);
-        }
-
-        return dados;
     }
 
 }
