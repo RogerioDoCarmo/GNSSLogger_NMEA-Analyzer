@@ -20,8 +20,7 @@ import java.util.logging.Logger;
  */
 public class Analise {
 
-    int NUM_INSTANCIAS;
-    int NUM_ATRIBUTOS;
+    int NUM_MEDICOES;
     ArrayList<String> medicoesNMEA;
     ArrayList<String> medicoesGPGGA;
 
@@ -31,140 +30,37 @@ public class Analise {
     
     public Analise(String caminhoArquivo) {
         this.medicoesNMEA = new ArrayList<>();
-        // tratando a extensão do arquivo:
-        String extensao = caminhoArquivo.substring(caminhoArquivo.length() - 4);
         lerTXT(caminhoArquivo);
-
-//        extensao = caminhoArquivo.substring(caminhoArquivo.length() - 5);
-//
-//        System.out.println(extensao);
-//
-//        if (extensao.equals(".nmea")) {
-//            lerTXT(caminhoArquivo);
-//        }
-        //
+        extrairGPGGA();
+        this.NUM_MEDICOES = 0;
+    }
+    
+    public void extrairGPGGA(){
+        for (String medicoesTemp : medicoesNMEA) {
+            if (medicoesTemp.contains("$GPGGA"))
+                medicoesGPGGA.add(medicoesTemp);
+        }
     }
     
     public ArrayList<String> extrairMedicoesGPGGA(){
         this.medicoesGPGGA = new ArrayList<>();
         
-        for (String medicoesTemp : medicoesNMEA) {
-            if (medicoesTemp.contains("$GPGGA"))
-                medicoesGPGGA.add(medicoesTemp);
-        }
+        extrairGPGGA();
+        
         return medicoesGPGGA;
     }
     
-    public ArrayList<String> extrairMedicoesPGLOR(){
-        this.medicoesGPGGA = new ArrayList<>();
-        
-        for (String medicoesTemp : medicoesNMEA) {
-            if (medicoesTemp.contains("$PGLOR"))
-                medicoesGPGGA.add(medicoesTemp);
-        }
-        return medicoesGPGGA;
+    public ArrayList<String> extrairMedicoes(String tipoNMEA){
+       ArrayList<String> medidas = new ArrayList<>();
+       
+       for (String medicoesTemp : medicoesNMEA) {
+            if (medicoesTemp.contains(tipoNMEA))
+                medidas.add(medicoesTemp);
+        }   
+       
+       return medidas;
     }
-    
-    public ArrayList<String> extrairMedicoesGPGSV(){
-        this.medicoesGPGGA = new ArrayList<>();
         
-        for (String medicoesTemp : medicoesNMEA) {
-            if (medicoesTemp.contains("$GPGSV"))
-                medicoesGPGGA.add(medicoesTemp);
-        }
-        return medicoesGPGGA;
-    }
-    
-    public ArrayList<String> extrairMedicoesGLGSV(){
-        this.medicoesGPGGA = new ArrayList<>();
-        
-        for (String medicoesTemp : medicoesNMEA) {
-            if (medicoesTemp.contains("$GLGSV"))
-                medicoesGPGGA.add(medicoesTemp);
-        }
-        return medicoesGPGGA;
-    }
-    
-    public ArrayList<String> extrairMedicoesBDGSV(){
-        this.medicoesGPGGA = new ArrayList<>();
-        
-        for (String medicoesTemp : medicoesNMEA) {
-            if (medicoesTemp.contains("$BDGSV"))
-                medicoesGPGGA.add(medicoesTemp);
-        }
-        return medicoesGPGGA;
-    }
-    
-    public ArrayList<String> extrairMedicoesGPGSA(){
-        this.medicoesGPGGA = new ArrayList<>();
-        
-        for (String medicoesTemp : medicoesNMEA) {
-            if (medicoesTemp.contains("$GPGSA"))
-                medicoesGPGGA.add(medicoesTemp);
-        }
-        return medicoesGPGGA;
-    }
-
-    public ArrayList<String> extrairMedicoesGNGSA(){
-        this.medicoesGPGGA = new ArrayList<>();
-        
-        for (String medicoesTemp : medicoesNMEA) {
-            if (medicoesTemp.contains("$GNGSA"))
-                medicoesGPGGA.add(medicoesTemp);
-        }
-        return medicoesGPGGA;
-    }
-
-    public ArrayList<String> extrairMedicoesQZGSA(){
-        this.medicoesGPGGA = new ArrayList<>();
-        
-        for (String medicoesTemp : medicoesNMEA) {
-            if (medicoesTemp.contains("$QZGSA"))
-                medicoesGPGGA.add(medicoesTemp);
-        }
-        return medicoesGPGGA;
-    }
-    
-    public ArrayList<String> extrairMedicoesIMGSA(){
-        this.medicoesGPGGA = new ArrayList<>();
-        
-        for (String medicoesTemp : medicoesNMEA) {
-            if (medicoesTemp.contains("$IMGSA"))
-                medicoesGPGGA.add(medicoesTemp);
-        }
-        return medicoesGPGGA;
-    }
-    
-    public ArrayList<String> extrairMedicoesBDGSA(){
-        this.medicoesGPGGA = new ArrayList<>();
-        
-        for (String medicoesTemp : medicoesNMEA) {
-            if (medicoesTemp.contains("$BDGSA"))
-                medicoesGPGGA.add(medicoesTemp);
-        }
-        return medicoesGPGGA;
-    }
-    
-    public ArrayList<String> extrairMedicoesGAGSA(){
-        this.medicoesGPGGA = new ArrayList<>();
-        
-        for (String medicoesTemp : medicoesNMEA) {
-            if (medicoesTemp.contains("$BDGSA"))
-                medicoesGPGGA.add(medicoesTemp);
-        }
-        return medicoesGPGGA;
-    }
-    
-    public ArrayList<String> extrairMedicoesGPRMC(){
-        this.medicoesGPGGA = new ArrayList<>();
-        
-        for (String medicoesTemp : medicoesNMEA) {
-            if (medicoesTemp.contains("$GPRMC"))
-                medicoesGPGGA.add(medicoesTemp);
-        }
-        return medicoesGPGGA;
-    }
-    
     public void compararValores(String arquivoOriginal, String arquivoProcessado){
         String cvsSplitBy = ",";
         String line = "";
@@ -261,7 +157,8 @@ public class Analise {
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             while ((line = br.readLine()) != null) {
                 if (line.contains("NMEA,")) {
-                    medicoesNMEA.add(line);
+                    this.medicoesNMEA.add(line);
+                    this.NUM_MEDICOES++;
                 }
             }
         } catch (IOException e) {
