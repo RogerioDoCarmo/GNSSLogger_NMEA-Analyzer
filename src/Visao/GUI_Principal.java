@@ -18,6 +18,24 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class GUI_Principal extends javax.swing.JFrame {
 
+    private String abrirArquivo(String extensao, String titulo, String filtro){
+        String fileName = null;
+
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle(titulo);
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        fileChooser.removeChoosableFileFilter(fileChooser.getChoosableFileFilters()[0]);
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter(filtro, extensao));
+        
+        int userSelection = fileChooser.showOpenDialog(null);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            fileName = fileToSave.getAbsolutePath();
+        }        
+        
+        return fileName;
+    }
+    
     /**
      * Creates new form GUI_Principal
      */
@@ -103,19 +121,11 @@ public class GUI_Principal extends javax.swing.JFrame {
 
     private void menuOpenLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuOpenLogActionPerformed
         String fileName = null;
+        String titulo = "Abra o arquivo gerado pelo GNSS Logger";
         String extensao = "txt";
+        String filtro = "txt (*.txt)";
         
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Abra o arquivo gerado pelo GNSS Logger");
-        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-        fileChooser.removeChoosableFileFilter(fileChooser.getChoosableFileFilters()[0]);
-        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("TXT (*.txt)", extensao));
-        
-        int userSelection = fileChooser.showOpenDialog(null);
-        if (userSelection == JFileChooser.APPROVE_OPTION) {
-            File fileToSave = fileChooser.getSelectedFile();
-            fileName = fileToSave.getAbsolutePath();
-        }
+        fileName = abrirArquivo(extensao,titulo,filtro);
         
         ControladorTeste.getInstance().abrirLog(fileName);
     }//GEN-LAST:event_menuOpenLogActionPerformed
@@ -127,24 +137,15 @@ public class GUI_Principal extends javax.swing.JFrame {
 
     private void menuOpenNMEAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuOpenNMEAActionPerformed
         JOptionPane.showMessageDialog(this,"Abra o arquivo .nmea gerado pelo GNSS Analysis App.");
-        
+               
         String fileName = null;
+        String titulo = "Abra o arquivo gerado pelo GNSS Analysis App";
         String extensao = "nmea";
+        String filtro = "nmea (*.nmea)";
         
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Abra o arquivo gerado pelo GNSS Analysis App");
-        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-        fileChooser.removeChoosableFileFilter(fileChooser.getChoosableFileFilters()[0]);
-        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("nmea (*.nmea)", extensao));
-        
-        int userSelection = fileChooser.showOpenDialog(null);
-        if (userSelection == JFileChooser.APPROVE_OPTION) {
-            File fileToSave = fileChooser.getSelectedFile();
-            fileName = fileToSave.getAbsolutePath();
-        }
-        
-        ControladorTeste.getInstance().abrirLog(fileName);
-        
+        fileName = abrirArquivo(extensao,titulo,filtro);
+               
+        ControladorTeste.getInstance().abrirLog(fileName);        
     }//GEN-LAST:event_menuOpenNMEAActionPerformed
 
     private void menuExtrairPGLORActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtrairPGLORActionPerformed
