@@ -20,35 +20,51 @@ import java.util.logging.Logger;
  */
 public class Analise {
 
-    int NUM_MEDICOES;
-    ArrayList<String> medicoesNMEA;
-    ArrayList<String> medicoesGPGGA;
+    private int NUM_MEDICOES;
+    private boolean leituraMedicoes;
+    private String caminhoArquivoLOG;
+    private ArrayList<String> medicoesNMEA;
+    private ArrayList<String> medicoesGPGGA;
+    private ArrayList<String> medicoesProcessadas;
 
     public Analise (){
-        
-    }
-    
-    public Analise(String caminhoArquivo) {
         this.medicoesNMEA = new ArrayList<>();
         this.medicoesGPGGA = new ArrayList<>();
+        this.medicoesProcessadas = new ArrayList<>();
         this.NUM_MEDICOES = 0;
-        lerTXT(caminhoArquivo);
-        extrairGPGGA();        
+        this.leituraMedicoes = false;
+        caminhoArquivoLOG = null;
     }
     
-    public void extrairGPGGA(){
+    public Analise(String caminhoArquivoLog) {
+        this.medicoesNMEA = new ArrayList<>();
+        this.medicoesGPGGA = new ArrayList<>();
+        this.medicoesProcessadas = new ArrayList<>();
+        this.NUM_MEDICOES = 0;
+        this.leituraMedicoes = false;
+        this.caminhoArquivoLOG = caminhoArquivoLog;   
+    }
+    
+    public ArrayList<String> extrairMedicoesGPGGA(){
+        if (!leituraMedicoes)
+            lerLogFile(caminhoArquivoLOG);        
+        extrairGPGGA();
+        return (this.medicoesGPGGA);  
+    }
+    
+    private void extrairGPGGA(){       
         for (String medicoesTemp : medicoesNMEA) {
             if (medicoesTemp.contains("$GPGGA"))
                 medicoesGPGGA.add(medicoesTemp);
         }
     }
     
-    public ArrayList<String> extrairMedicoesGPGGA(){        
-        return (this.medicoesGPGGA);
-    }
-    
     public ArrayList<String> extrairMedicoes(String tipoNMEA){
-       ArrayList<String> medidas = new ArrayList<>();
+       if (!leituraMedicoes){
+            lerLogFile(caminhoArquivoLOG);            
+        }
+        
+        ArrayList<String> medidas = new ArrayList<>();
        
        for (String medicoesTemp : medicoesNMEA) {
             if (medicoesTemp.contains(tipoNMEA))
@@ -56,6 +72,24 @@ public class Analise {
         }   
        
        return medidas;
+    }
+    
+    public ArrayList<String> abrirArquivoProcessado(String nomeArquivo){
+      lerNMEAprocessada(nomeArquivo);
+        
+      return (this.medicoesProcessadas);
+    }
+    
+    public ArrayList<String> extrairMedicoesBrutas(){
+        if (!this.medicoesNMEA.isEmpty())
+                return this.medicoesNMEA;
+        return null;
+    }
+    
+    public ArrayList<String> extrairMedicoesProcessadas(){
+        if (!this.medicoesProcessadas.isEmpty())
+                return this.medicoesProcessadas;
+        return null;
     }
         
     public void compararValores(String arquivoOriginal, String arquivoProcessado){
@@ -147,15 +181,31 @@ public class Analise {
 
     }
     
-    private void lerTXT(String arquivoTeste) {
+    public void lerLogFile(String caminhoArquivo) {       
+        String line = "";
+
+        try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
+            while ((line = br.readLine()) != null) {
+                if (line.contains("NMEA,")) {
+                    this.medicoesNMEA.add(line);
+                    this.NUM_MEDICOES++;
+                }
+            }
+            this.leituraMedicoes = true;
+            this.caminhoArquivoLOG = caminhoArquivo;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void lerNMEAprocessada(String arquivoTeste) {
         String csvFile = arquivoTeste;
         String line = "";
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             while ((line = br.readLine()) != null) {
-                if (line.contains("NMEA,")) {
-                    this.medicoesNMEA.add(line);
-                    this.NUM_MEDICOES++;
+                if (line.contains("$")) {
+                    this.medicoesProcessadas.add(line);
                 }
             }
         } catch (IOException e) {
