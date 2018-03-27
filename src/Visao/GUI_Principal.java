@@ -20,10 +20,11 @@ public class GUI_Principal extends javax.swing.JFrame {
 
     private String abrirArquivo(String extensao, String titulo, String filtro){
         String fileName = null;
+        String userDir = System.getProperty("user.home");
+        userDir += "/Desktop";
 
-        JFileChooser fileChooser = new JFileChooser();
+        JFileChooser fileChooser = new JFileChooser(userDir);
         fileChooser.setDialogTitle(titulo);
-        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
         fileChooser.removeChoosableFileFilter(fileChooser.getChoosableFileFilters()[0]);
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter(filtro, extensao));
         
@@ -31,7 +32,9 @@ public class GUI_Principal extends javax.swing.JFrame {
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File fileToSave = fileChooser.getSelectedFile();
             fileName = fileToSave.getAbsolutePath();
-        }        
+        }else if (userSelection == JFileChooser.CANCEL_OPTION){          
+            
+        }       
         
         return fileName;
     }
@@ -59,6 +62,7 @@ public class GUI_Principal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         menuExtrairPGLOR = new javax.swing.JMenuItem();
         menuOpenNMEA = new javax.swing.JMenuItem();
+        menuShowNMEA = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GNSS Logger - NMEA Analyzer");
@@ -101,6 +105,9 @@ public class GUI_Principal extends javax.swing.JFrame {
         });
         jMenu1.add(menuOpenNMEA);
 
+        menuShowNMEA.setText("Mostrar NMEA processadas");
+        jMenu1.add(menuShowNMEA);
+
         jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
@@ -127,7 +134,8 @@ public class GUI_Principal extends javax.swing.JFrame {
         
         fileName = abrirArquivo(extensao,titulo,filtro);
         
-        ControladorTeste.getInstance().abrirLog(fileName);
+        if (fileName != null)
+            ControladorTeste.getInstance().abrirLog(fileName);
     }//GEN-LAST:event_menuOpenLogActionPerformed
 
     private void menuExtrairGPGGAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtrairGPGGAActionPerformed
@@ -144,8 +152,9 @@ public class GUI_Principal extends javax.swing.JFrame {
         String filtro = "nmea (*.nmea)";
         
         fileName = abrirArquivo(extensao,titulo,filtro);
-               
-        ControladorTeste.getInstance().abrirLog(fileName);        
+        
+        if (fileName != null)
+            ControladorTeste.getInstance().abrirMedicao(fileName);        
     }//GEN-LAST:event_menuOpenNMEAActionPerformed
 
     private void menuExtrairPGLORActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtrairPGLORActionPerformed
@@ -196,5 +205,6 @@ public class GUI_Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuExtrairPGLOR;
     private javax.swing.JMenuItem menuOpenLog;
     private javax.swing.JMenuItem menuOpenNMEA;
+    private javax.swing.JMenuItem menuShowNMEA;
     // End of variables declaration//GEN-END:variables
 }
