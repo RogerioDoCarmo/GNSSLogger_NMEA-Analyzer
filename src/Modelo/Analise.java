@@ -24,12 +24,14 @@ public class Analise {
     private boolean leituraMedicoes;
     private String caminhoArquivoLOG;
     private ArrayList<String> medicoesNMEA;
-    private ArrayList<String> medicoesGPGGA;
+    private ArrayList<String> medicoesGPGGAbrutas;
+     private ArrayList<String> medicoesGPGGAprocessadas;
     private ArrayList<String> medicoesProcessadas;
 
     public Analise (){
         this.medicoesNMEA = new ArrayList<>();
-        this.medicoesGPGGA = new ArrayList<>();
+        this.medicoesGPGGAbrutas = new ArrayList<>();
+        this.medicoesGPGGAprocessadas = new ArrayList<>();
         this.medicoesProcessadas = new ArrayList<>();
         this.NUM_MEDICOES = 0;
         this.leituraMedicoes = false;
@@ -38,28 +40,45 @@ public class Analise {
     
     public Analise(String caminhoArquivoLog) {
         this.medicoesNMEA = new ArrayList<>();
-        this.medicoesGPGGA = new ArrayList<>();
+        this.medicoesGPGGAbrutas = new ArrayList<>();
+        this.medicoesGPGGAprocessadas = new ArrayList<>();
         this.medicoesProcessadas = new ArrayList<>();
         this.NUM_MEDICOES = 0;
         this.leituraMedicoes = false;
         this.caminhoArquivoLOG = caminhoArquivoLog;   
     }
     
-    public ArrayList<String> extrairMedicoesGPGGA(){
+    public ArrayList<String> extrairMedicoesGPGGA_brutas(){
         if (!leituraMedicoes)
             lerLogFile(caminhoArquivoLOG);        
-        extrairGPGGA();
-        return (this.medicoesGPGGA);  
+        extrairGPGGA_brutas();
+        return (this.medicoesGPGGAbrutas);  
     }
     
-    private void extrairGPGGA(){       
+    // TODO: Arrumar a verificação inicial do método!
+    
+    public ArrayList<String> extrairMedicoesGPGGA_processadas(){
+        if (!leituraMedicoes) // FIXME Arrumar aqui!
+            lerLogFile(caminhoArquivoLOG);        
+        extrairGPGGA_processadas();
+        return (this.medicoesGPGGAprocessadas);  
+    }
+    
+    private void extrairGPGGA_brutas(){       
         for (String medicoesTemp : medicoesNMEA) {
             if (medicoesTemp.contains("$GPGGA"))
-                medicoesGPGGA.add(medicoesTemp);
+                medicoesGPGGAbrutas.add(medicoesTemp);
         }
     }
     
-    public ArrayList<String> extrairMedicoes(String tipoNMEA){
+    private void extrairGPGGA_processadas(){       
+        for (String medicoesTemp : medicoesProcessadas) {
+            if (medicoesTemp.contains("$GPGGA"))
+                medicoesGPGGAprocessadas.add(medicoesTemp);
+        }
+    }
+    
+    public ArrayList<String> extrairMedicaoBruta(String tipoNMEA){
        if (!leituraMedicoes){
             lerLogFile(caminhoArquivoLOG);            
         }
@@ -76,7 +95,7 @@ public class Analise {
     
     public ArrayList<String> abrirArquivoProcessado(String nomeArquivo){
       lerNMEAprocessada(nomeArquivo);
-        
+      // TODO arrumar extrairGPGGA_processadas();  
       return (this.medicoesProcessadas);
     }
     
@@ -87,64 +106,27 @@ public class Analise {
     }
     
     public ArrayList<String> extrairMedicoesProcessadas(){
-        if (!this.medicoesProcessadas.isEmpty())
+               if (!this.medicoesProcessadas.isEmpty())
                 return this.medicoesProcessadas;
         return null;
     }
         
-    public void compararValores(String arquivoOriginal, String arquivoProcessado){
-        String cvsSplitBy = ",";
-        String line = "";
+    public void compararValores(){
+        ArrayList<Comparacao> comparacoes = new ArrayList<>();
+             
         
-        ArrayList<Object[]> dadosOriginais = new ArrayList<>();
-        ArrayList<Object[]> dadosProcessados = new ArrayList<>();
-        ArrayList<String> comparacoes = new ArrayList<>();
-        
-        try (BufferedReader br = new BufferedReader(new FileReader(arquivoOriginal))) {
-            while ((line = br.readLine()) != null) {
-                if (line.contains("$GPGGA,")) {
-                    Object[] novaLinha = line.split(cvsSplitBy);
-                    dadosOriginais.add(novaLinha);
-                    //System.out.println(novaLinha);
-                }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        try (BufferedReader br = new BufferedReader(new FileReader(arquivoProcessado))) {
-            while ((line = br.readLine()) != null) {
-                if (line.contains("$GPGGA,")) {
-                    Object[] novaLinha = line.split(cvsSplitBy);
-                    dadosProcessados.add(novaLinha);
-                   // System.out.println(novaLinha);
-                }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        //Comparação
         int i = 0;
-        while(i < dadosOriginais.size()){
-            //System.out.println(dadosOriginais.get(i)[2] + " --- " + dadosProcessados.get(i)[1]);
-            i++;
-        }
-        System.out.println("\nForam comparadas " + i + " medições NMEA $GPGGA\n");
-        
-        //Comparando Latitudes
-        String novaLinha = "";
-        i = 0;
-        while (i < dadosOriginais.size()) {
+        while (i < medicoesGPGGAbrutas.size()) {
             
             try {
                 float diferenca = 0f;
-                novaLinha = "UTC: " + dadosOriginais.get(i)[2].toString();
-                diferenca = 1800f * Float.valueOf(dadosOriginais.get(i)[3].toString())  -
-                            1800f * Float.valueOf(dadosProcessados.get(i)[2].toString());
+                
+                diferenca = 1800f * Float.valueOf(medicoesGPGGAbrutas.get(i).split(",")[3])  -
+                            1800f * Float.valueOf(dadosProcessados.get(i)[3].toString());
                 //System.out.println("Diferença: " + diferenca);
+                
+                Comparacao novaComparacao = new Comparacao(medicoesGPGGAbrutas.get(i).split(",")[2], "asa", "dasd");
+                comparacoes.add(novaComparacao);
 
                 novaLinha += " Diferenca na latitude : " + diferenca + "\n";
             }catch (NumberFormatException ex){
@@ -179,6 +161,28 @@ public class Analise {
         
         System.out.println(comparacoes);
 
+    }
+    
+    private class Comparacao{
+        private String UTC;
+        private String diffLatitude;
+        private String diffLongitude;
+        
+        public Comparacao(String UTC, String diffLatitude, String diffLongitude){
+            this.UTC = UTC;
+            this.diffLatitude = diffLatitude;
+            this.diffLongitude = diffLongitude;
+        }
+        
+        public String getUTC(){
+            return this.UTC;
+        }        
+        public String getDiffLatitude(){
+            return this.diffLatitude;
+        }
+        public String getDiffLongitude(){
+            return this.diffLongitude;
+        }
     }
     
     public void lerLogFile(String caminhoArquivo) {       

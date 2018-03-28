@@ -32,7 +32,8 @@ public class ControladorTeste {
     }
     
     public boolean abrirMedicoesProcessadas(String caminhoArquivo){
-        analise.abrirArquivoProcessado(caminhoArquivo);                
+        analise.abrirArquivoProcessado(caminhoArquivo); 
+//        analise.extrairGPGGA_processadas();
         return true;
     }
     
@@ -48,74 +49,80 @@ public class ControladorTeste {
         return result;
     }
     
-    public Resultado getGPGGA(){
-        ArrayList<String> dados = analise.extrairMedicoesGPGGA();        
+    public Resultado getGPGGAbrutas(){
+        ArrayList<String> dados = analise.extrairMedicoesGPGGA_brutas();        
         Resultado result = new Resultado("Medições $GPGGA brutas", dados);        
         return result;
     }
     
+    public Resultado getGPGGAprocessadas(){
+        ArrayList<String> dados = analise.extrairMedicoesGPGGA_processadas();        
+        Resultado result = new Resultado("Medições $GPGGA processadas", dados);        
+        return result;
+    }
+    
     public Resultado getPGLOR(){
-        ArrayList<String> dados = analise.extrairMedicoes("$PGLOR");        
+        ArrayList<String> dados = analise.extrairMedicaoBruta("$PGLOR");        
         Resultado result = new Resultado("Medições $PGLOR brutas", dados);        
         return result;
     }
     
     public Resultado getGPGSV(){
-        ArrayList<String> dados = analise.extrairMedicoes("$GPGSV");        
+        ArrayList<String> dados = analise.extrairMedicaoBruta("$GPGSV");        
         Resultado result = new Resultado("Medições $GPGSV brutas", dados);        
         return result;
     }
     
     public Resultado getGLGSV(){
-        ArrayList<String> dados = analise.extrairMedicoes("$GLGSV");         
+        ArrayList<String> dados = analise.extrairMedicaoBruta("$GLGSV");         
         Resultado result = new Resultado("Medições $GLGSV brutas", dados);        
         return result;
     }
     
     public Resultado getBDGSV(){
-        ArrayList<String> dados = analise.extrairMedicoes("$BDGSV");        
+        ArrayList<String> dados = analise.extrairMedicaoBruta("$BDGSV");        
         Resultado result = new Resultado("Medições $BDGSV brutas", dados);        
         return result;
     }
     
     public Resultado getGPGSA(){
-        ArrayList<String> dados = analise.extrairMedicoes("$GPGSA");        
+        ArrayList<String> dados = analise.extrairMedicaoBruta("$GPGSA");        
         Resultado result = new Resultado("Medições $GPGSA brutas", dados);        
         return result;
     }
     
     public Resultado getGNGSA(){
-        ArrayList<String> dados = analise.extrairMedicoes("$GNGSA");          
+        ArrayList<String> dados = analise.extrairMedicaoBruta("$GNGSA");          
         Resultado result = new Resultado("Medições $GNGSA brutas", dados);        
         return result;
     }
     
     public Resultado getQZGSA(){
-        ArrayList<String> dados = analise.extrairMedicoes("$QZGSA");        
+        ArrayList<String> dados = analise.extrairMedicaoBruta("$QZGSA");        
         Resultado result = new Resultado("Medições $QZGSA brutas", dados);        
         return result;
     }
     
     public Resultado getIMGSA(){
-        ArrayList<String> dados = analise.extrairMedicoes("$IMGSA");        
+        ArrayList<String> dados = analise.extrairMedicaoBruta("$IMGSA");        
         Resultado result = new Resultado("Medições $IMGSA brutas", dados);        
         return result;
     }
     
     public Resultado getBDGSA(){
-        ArrayList<String> dados = analise.extrairMedicoes("$BDGSA");        
+        ArrayList<String> dados = analise.extrairMedicaoBruta("$BDGSA");        
         Resultado result = new Resultado("Medições $BDGSA brutas", dados);        
         return result;
     }
     
     public Resultado getGAGSA(){
-        ArrayList<String> dados = analise.extrairMedicoes("$GAGSA");        
+        ArrayList<String> dados = analise.extrairMedicaoBruta("$GAGSA");        
         Resultado result = new Resultado("Medições $GAGSA brutas", dados);        
         return result;
     }
     
     public Resultado getGPRMC(){
-        ArrayList<String> dados = analise.extrairMedicoes("$GPRMC");       
+        ArrayList<String> dados = analise.extrairMedicaoBruta("$GPRMC");       
         Resultado result = new Resultado("Medições $GPRMC brutas", dados);        
         return result;
     }
