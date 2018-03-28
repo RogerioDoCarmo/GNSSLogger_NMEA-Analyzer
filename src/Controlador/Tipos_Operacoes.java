@@ -10,6 +10,6 @@ package Controlador;
  * @author Rogerio
  */
 public enum Tipos_Operacoes {
-    NONE, $GPGGA,
+    NONE, MEDICOES_BRUTAS, MEDICOES_PROCESSADAS, $GPGGA,
     $PGLOR, $GPGSV, $GLGSV, $BDGSV, $GPGSA, $GNGSA, $QZGSA, $IMGSA, $BDGSA, $GAGSA, $GPRMC
 }

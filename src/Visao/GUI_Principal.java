@@ -22,7 +22,7 @@ public class GUI_Principal extends javax.swing.JFrame {
         String fileName = null;
         String dir = System.getProperty("user.home");
         dir += "/Desktop";
-        
+      
         JFileChooser fileChooser = new JFileChooser(dir);
         fileChooser.setDialogTitle(titulo);
         fileChooser.setFileHidingEnabled(true);
@@ -33,7 +33,9 @@ public class GUI_Principal extends javax.swing.JFrame {
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File fileToSave = fileChooser.getSelectedFile();
             fileName = fileToSave.getAbsolutePath();
-        }        
+        }else if (userSelection == JFileChooser.CANCEL_OPTION){          
+            
+        }       
         
         return fileName;
     }
@@ -71,6 +73,8 @@ public class GUI_Principal extends javax.swing.JFrame {
         menuExtrairGAGSA = new javax.swing.JMenuItem();
         menuExtrairGPRMC = new javax.swing.JMenuItem();
         menuOpenNMEA = new javax.swing.JMenuItem();
+        menuShowNMEAraw = new javax.swing.JMenuItem();
+        menuShowNMEApvt = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GNSS Logger - NMEA Analyzer");
@@ -193,6 +197,22 @@ public class GUI_Principal extends javax.swing.JFrame {
         });
         jMenu1.add(menuOpenNMEA);
 
+        menuShowNMEAraw.setText("Mostrar NMEA brutas");
+        menuShowNMEAraw.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuShowNMEArawActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuShowNMEAraw);
+
+        menuShowNMEApvt.setText("Mostrar NMEA processadas");
+        menuShowNMEApvt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuShowNMEApvtActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuShowNMEApvt);
+
         jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
@@ -237,7 +257,7 @@ public class GUI_Principal extends javax.swing.JFrame {
         fileName = abrirArquivo(extensao,titulo,filtro);
         
         if (fileName != null)
-            ControladorTeste.getInstance().abrirLog(fileName);        
+            ControladorTeste.getInstance().abrirMedicoesProcessadas(fileName);        
     }//GEN-LAST:event_menuOpenNMEAActionPerformed
 
     private void menuExtrairPGLORActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtrairPGLORActionPerformed
@@ -295,6 +315,17 @@ public class GUI_Principal extends javax.swing.JFrame {
        novaTela.setVisible(true);
     }//GEN-LAST:event_menuExtrairGPRMCActionPerformed
 
+  private void menuShowNMEApvtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuShowNMEApvtActionPerformed
+       GUI_Resultado novaTela = new GUI_Resultado(this,true,Tipos_Operacoes.MEDICOES_PROCESSADAS);
+       novaTela.setVisible(true);
+    }//GEN-LAST:event_menuShowNMEApvtActionPerformed
+
+    private void menuShowNMEArawActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuShowNMEArawActionPerformed
+       GUI_Resultado novaTela = new GUI_Resultado(this,true,Tipos_Operacoes.MEDICOES_BRUTAS);
+       novaTela.setVisible(true);
+    }//GEN-LAST:event_menuShowNMEArawActionPerformed
+
+
     /**
      * @param args the command line arguments
      */
@@ -348,5 +379,7 @@ public class GUI_Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuExtrairQZGSA;
     private javax.swing.JMenuItem menuOpenLog;
     private javax.swing.JMenuItem menuOpenNMEA;
+    private javax.swing.JMenuItem menuShowNMEApvt;
+    private javax.swing.JMenuItem menuShowNMEAraw;
     // End of variables declaration//GEN-END:variables
 }

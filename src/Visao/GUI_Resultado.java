@@ -56,7 +56,7 @@ public class GUI_Resultado extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblTitulo)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -65,7 +65,7 @@ public class GUI_Resultado extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(lblTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -172,9 +172,16 @@ public class GUI_Resultado extends javax.swing.JDialog {
                 lblTitulo.setText(ControladorTeste.getInstance().getGPRMC().getLabel());
                 medicoes = ControladorTeste.getInstance().getGPRMC().getDados();
             break;
-        }
-
-
+            case MEDICOES_BRUTAS:
+                lblTitulo.setText(ControladorTeste.getInstance().getMedicoesBrutas().getLabel());
+                medicoes = ControladorTeste.getInstance().getMedicoesBrutas().getDados();
+            break;
+            case MEDICOES_PROCESSADAS:
+                lblTitulo.setText(ControladorTeste.getInstance().getMedicoesProcessadas().getLabel());
+                medicoes = ControladorTeste.getInstance().getMedicoesProcessadas().getDados();
+            break;
+        }        
+       
         DefaultListModel listModel = new DefaultListModel();
         
         for (String medicao : medicoes) {
