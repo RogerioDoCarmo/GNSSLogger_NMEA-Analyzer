@@ -103,7 +103,8 @@ public class GUI_Resultado extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {                
                // super(new javax.swing.JFrame(), true);
-                GUI_Resultado dialog = new GUI_Resultado(new javax.swing.JFrame(), true, Tipos_Operacoes.$GPGGA);
+               // TODO arrumar essa gambiarra atualizando a comunicação entre frames!
+                GUI_Resultado dialog = new GUI_Resultado(new javax.swing.JFrame(), true, Tipos_Operacoes.$GPGGA_Brutas);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -124,9 +125,13 @@ public class GUI_Resultado extends javax.swing.JDialog {
     private void carregarValores(Tipos_Operacoes operacao) {
         ArrayList<String> medicoes = null;
         switch (operacao) {
-            case $GPGGA:
-                lblTitulo.setText(ControladorTeste.getInstance().getGPGGA().getLabel());
-                medicoes = ControladorTeste.getInstance().getGPGGA().getDados();
+            case $GPGGA_Brutas:
+                lblTitulo.setText(ControladorTeste.getInstance().getGPGGAbrutas().getLabel());
+                medicoes = ControladorTeste.getInstance().getGPGGAbrutas().getDados();
+            break;
+            case $GPGGA_Processadas:
+                lblTitulo.setText(ControladorTeste.getInstance().getGPGGAprocessadas().getLabel());
+                medicoes = ControladorTeste.getInstance().getGPGGAprocessadas().getDados();
             break;
             case $PGLOR:
                 lblTitulo.setText(ControladorTeste.getInstance().getPGLOR().getLabel());
