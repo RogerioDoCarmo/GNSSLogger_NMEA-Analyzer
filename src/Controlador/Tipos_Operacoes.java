@@ -10,5 +10,6 @@ package Controlador;
  * @author Rogerio
  */
 public enum Tipos_Operacoes {
-    NONE, $GPGGA,$PGLOR 
+    NONE, $GPGGA,
+    $PGLOR, $GPGSV, $GLGSV, $BDGSV, $GPGSA, $GNGSA, $QZGSA, $IMGSA, $BDGSA, $GAGSA, $GPRMC
 }

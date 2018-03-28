@@ -58,6 +58,16 @@ public class GUI_Principal extends javax.swing.JFrame {
         menuExtrairGPGGA = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         menuExtrairPGLOR = new javax.swing.JMenuItem();
+        menuExtrairGPGSV = new javax.swing.JMenuItem();
+        menuExtrairGLGSV = new javax.swing.JMenuItem();
+        menuExtrairBDGSV = new javax.swing.JMenuItem();
+        menuExtrairGPGSA = new javax.swing.JMenuItem();
+        menuExtrairGNGSA = new javax.swing.JMenuItem();
+        menuExtrairQZGSA = new javax.swing.JMenuItem();
+        menuExtrairIMGSA = new javax.swing.JMenuItem();
+        menuExtrairBDGSA = new javax.swing.JMenuItem();
+        menuExtrairGAGSA = new javax.swing.JMenuItem();
+        menuExtrairGPRMC = new javax.swing.JMenuItem();
         menuOpenNMEA = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -90,6 +100,86 @@ public class GUI_Principal extends javax.swing.JFrame {
             }
         });
         jMenu3.add(menuExtrairPGLOR);
+
+        menuExtrairGPGSV.setText("Extrair $GPGSV");
+        menuExtrairGPGSV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuExtrairGPGSVActionPerformed(evt);
+            }
+        });
+        jMenu3.add(menuExtrairGPGSV);
+
+        menuExtrairGLGSV.setText("Extrair $GLGSV");
+        menuExtrairGLGSV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuExtrairGLGSVActionPerformed(evt);
+            }
+        });
+        jMenu3.add(menuExtrairGLGSV);
+
+        menuExtrairBDGSV.setText("Extrair $BDGSV");
+        menuExtrairBDGSV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuExtrairBDGSVActionPerformed(evt);
+            }
+        });
+        jMenu3.add(menuExtrairBDGSV);
+
+        menuExtrairGPGSA.setText("Extrair $GPGSA");
+        menuExtrairGPGSA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuExtrairGPGSAActionPerformed(evt);
+            }
+        });
+        jMenu3.add(menuExtrairGPGSA);
+
+        menuExtrairGNGSA.setText("Extrair $GNGSA");
+        menuExtrairGNGSA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuExtrairGNGSAActionPerformed(evt);
+            }
+        });
+        jMenu3.add(menuExtrairGNGSA);
+
+        menuExtrairQZGSA.setText("Extrair $QZGSA");
+        menuExtrairQZGSA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuExtrairQZGSAActionPerformed(evt);
+            }
+        });
+        jMenu3.add(menuExtrairQZGSA);
+
+        menuExtrairIMGSA.setText("Extrair $IMGSA");
+        menuExtrairIMGSA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuExtrairIMGSAActionPerformed(evt);
+            }
+        });
+        jMenu3.add(menuExtrairIMGSA);
+
+        menuExtrairBDGSA.setText("Extrair $BDGSA");
+        menuExtrairBDGSA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuExtrairBDGSAActionPerformed(evt);
+            }
+        });
+        jMenu3.add(menuExtrairBDGSA);
+
+        menuExtrairGAGSA.setText("Extrair $GAGSA");
+        menuExtrairGAGSA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuExtrairGAGSAActionPerformed(evt);
+            }
+        });
+        jMenu3.add(menuExtrairGAGSA);
+
+        menuExtrairGPRMC.setText("Extrair $GPRMC");
+        menuExtrairGPRMC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuExtrairGPRMCActionPerformed(evt);
+            }
+        });
+        jMenu3.add(menuExtrairGPRMC);
 
         jMenu1.add(jMenu3);
 
@@ -153,6 +243,56 @@ public class GUI_Principal extends javax.swing.JFrame {
        novaTela.setVisible(true);
     }//GEN-LAST:event_menuExtrairPGLORActionPerformed
 
+    private void menuExtrairGPGSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtrairGPGSVActionPerformed
+       GUI_Resultado novaTela = new GUI_Resultado(this,true,Tipos_Operacoes.$GPGSV);
+       novaTela.setVisible(true);
+    }//GEN-LAST:event_menuExtrairGPGSVActionPerformed
+
+    private void menuExtrairGLGSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtrairGLGSVActionPerformed
+       GUI_Resultado novaTela = new GUI_Resultado(this,true,Tipos_Operacoes.$GLGSV);
+       novaTela.setVisible(true);
+    }//GEN-LAST:event_menuExtrairGLGSVActionPerformed
+
+    private void menuExtrairBDGSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtrairBDGSVActionPerformed
+       GUI_Resultado novaTela = new GUI_Resultado(this,true,Tipos_Operacoes.$BDGSV);
+       novaTela.setVisible(true);
+    }//GEN-LAST:event_menuExtrairBDGSVActionPerformed
+
+    private void menuExtrairGPGSAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtrairGPGSAActionPerformed
+       GUI_Resultado novaTela = new GUI_Resultado(this,true,Tipos_Operacoes.$GPGSA);
+       novaTela.setVisible(true);
+    }//GEN-LAST:event_menuExtrairGPGSAActionPerformed
+
+    private void menuExtrairGNGSAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtrairGNGSAActionPerformed
+       GUI_Resultado novaTela = new GUI_Resultado(this,true,Tipos_Operacoes.$GNGSA);
+       novaTela.setVisible(true);
+    }//GEN-LAST:event_menuExtrairGNGSAActionPerformed
+
+    private void menuExtrairQZGSAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtrairQZGSAActionPerformed
+       GUI_Resultado novaTela = new GUI_Resultado(this,true,Tipos_Operacoes.$QZGSA);
+       novaTela.setVisible(true);
+    }//GEN-LAST:event_menuExtrairQZGSAActionPerformed
+
+    private void menuExtrairIMGSAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtrairIMGSAActionPerformed
+       GUI_Resultado novaTela = new GUI_Resultado(this,true,Tipos_Operacoes.$IMGSA);
+       novaTela.setVisible(true);
+    }//GEN-LAST:event_menuExtrairIMGSAActionPerformed
+
+    private void menuExtrairBDGSAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtrairBDGSAActionPerformed
+       GUI_Resultado novaTela = new GUI_Resultado(this,true,Tipos_Operacoes.$BDGSA);
+       novaTela.setVisible(true);
+    }//GEN-LAST:event_menuExtrairBDGSAActionPerformed
+
+    private void menuExtrairGAGSAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtrairGAGSAActionPerformed
+       GUI_Resultado novaTela = new GUI_Resultado(this,true,Tipos_Operacoes.$GAGSA);
+       novaTela.setVisible(true);
+    }//GEN-LAST:event_menuExtrairGAGSAActionPerformed
+
+    private void menuExtrairGPRMCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtrairGPRMCActionPerformed
+       GUI_Resultado novaTela = new GUI_Resultado(this,true,Tipos_Operacoes.$GPRMC);
+       novaTela.setVisible(true);
+    }//GEN-LAST:event_menuExtrairGPRMCActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -192,8 +332,18 @@ public class GUI_Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem menuExtrairBDGSA;
+    private javax.swing.JMenuItem menuExtrairBDGSV;
+    private javax.swing.JMenuItem menuExtrairGAGSA;
+    private javax.swing.JMenuItem menuExtrairGLGSV;
+    private javax.swing.JMenuItem menuExtrairGNGSA;
     private javax.swing.JMenuItem menuExtrairGPGGA;
+    private javax.swing.JMenuItem menuExtrairGPGSA;
+    private javax.swing.JMenuItem menuExtrairGPGSV;
+    private javax.swing.JMenuItem menuExtrairGPRMC;
+    private javax.swing.JMenuItem menuExtrairIMGSA;
     private javax.swing.JMenuItem menuExtrairPGLOR;
+    private javax.swing.JMenuItem menuExtrairQZGSA;
     private javax.swing.JMenuItem menuOpenLog;
     private javax.swing.JMenuItem menuOpenNMEA;
     // End of variables declaration//GEN-END:variables

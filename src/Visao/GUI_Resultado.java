@@ -123,18 +123,58 @@ public class GUI_Resultado extends javax.swing.JDialog {
 
     private void carregarValores(Tipos_Operacoes operacao) {
         ArrayList<String> medicoes = null;
-        switch (operacao){
+        switch (operacao) {
             case $GPGGA:
-                 lblTitulo.setText(ControladorTeste.getInstance().getGPGGA().getLabel());
-                 medicoes = ControladorTeste.getInstance().getGPGGA().getDados();
+                lblTitulo.setText(ControladorTeste.getInstance().getGPGGA().getLabel());
+                medicoes = ControladorTeste.getInstance().getGPGGA().getDados();
             break;
             case $PGLOR:
-                 lblTitulo.setText(ControladorTeste.getInstance().getPGLOR().getLabel());
-                 medicoes = ControladorTeste.getInstance().getPGLOR().getDados();
+                lblTitulo.setText(ControladorTeste.getInstance().getPGLOR().getLabel());
+                medicoes = ControladorTeste.getInstance().getPGLOR().getDados();
+            break;
+            case $GPGSV:
+                lblTitulo.setText(ControladorTeste.getInstance().getGPGSV().getLabel());
+                medicoes = ControladorTeste.getInstance().getGPGSV().getDados();
+            break;
+            case $GLGSV:
+                lblTitulo.setText(ControladorTeste.getInstance().getGLGSV().getLabel());
+                medicoes = ControladorTeste.getInstance().getGLGSV().getDados();
+            break;
+            case $BDGSV:
+                lblTitulo.setText(ControladorTeste.getInstance().getBDGSV().getLabel());
+                medicoes = ControladorTeste.getInstance().getBDGSV().getDados();
+            break;
+            case $GPGSA:
+                lblTitulo.setText(ControladorTeste.getInstance().getGPGSA().getLabel());
+                medicoes = ControladorTeste.getInstance().getGPGSA().getDados();
+            break;
+            case $GNGSA:
+                lblTitulo.setText(ControladorTeste.getInstance().getGNGSA().getLabel());
+                medicoes = ControladorTeste.getInstance().getGNGSA().getDados();
+            break;
+            case $QZGSA:
+                lblTitulo.setText(ControladorTeste.getInstance().getQZGSA().getLabel());
+                medicoes = ControladorTeste.getInstance().getQZGSA().getDados();
+            break;
+            case $IMGSA:
+                lblTitulo.setText(ControladorTeste.getInstance().getIMGSA().getLabel());
+                medicoes = ControladorTeste.getInstance().getIMGSA().getDados();
+            break;
+            case $BDGSA:
+                lblTitulo.setText(ControladorTeste.getInstance().getBDGSA().getLabel());
+                medicoes = ControladorTeste.getInstance().getBDGSA().getDados();
+            break;
+            case $GAGSA:
+                lblTitulo.setText(ControladorTeste.getInstance().getGAGSA().getLabel());
+                medicoes = ControladorTeste.getInstance().getGAGSA().getDados();
+            break;
+            case $GPRMC:
+                lblTitulo.setText(ControladorTeste.getInstance().getGPRMC().getLabel());
+                medicoes = ControladorTeste.getInstance().getGPRMC().getDados();
             break;
         }
-        
-       
+
+
         DefaultListModel listModel = new DefaultListModel();
         
         for (String medicao : medicoes) {
