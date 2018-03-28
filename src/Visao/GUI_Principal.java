@@ -56,10 +56,15 @@ public class GUI_Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnAbrirLog = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuOpenLog = new javax.swing.JMenuItem();
-        menuExtrairGPGGA = new javax.swing.JMenuItem();
+        menuOpenNMEA = new javax.swing.JMenuItem();
+        menuExtrairGPGGAbrutas = new javax.swing.JMenuItem();
+        menuExtrairGPGGAprocessadas = new javax.swing.JMenuItem();
+        menuShowNMEAraw = new javax.swing.JMenuItem();
+        menuShowNMEApvt = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         menuExtrairPGLOR = new javax.swing.JMenuItem();
         menuExtrairGPGSV = new javax.swing.JMenuItem();
@@ -72,15 +77,21 @@ public class GUI_Principal extends javax.swing.JFrame {
         menuExtrairBDGSA = new javax.swing.JMenuItem();
         menuExtrairGAGSA = new javax.swing.JMenuItem();
         menuExtrairGPRMC = new javax.swing.JMenuItem();
-        menuOpenNMEA = new javax.swing.JMenuItem();
-        menuShowNMEAraw = new javax.swing.JMenuItem();
-        menuShowNMEApvt = new javax.swing.JMenuItem();
+        menuCompararGPGGA = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GNSS Logger - NMEA Analyzer");
 
+        btnAbrirLog.setText("Abrir Log");
+        btnAbrirLog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAbrirLogActionPerformed(evt);
+            }
+        });
+
         jMenu1.setText("Arquivo");
 
+        menuOpenLog.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         menuOpenLog.setText("Abrir log");
         menuOpenLog.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,13 +100,45 @@ public class GUI_Principal extends javax.swing.JFrame {
         });
         jMenu1.add(menuOpenLog);
 
-        menuExtrairGPGGA.setText("Extrair $GPGGA");
-        menuExtrairGPGGA.addActionListener(new java.awt.event.ActionListener() {
+        menuOpenNMEA.setText("Abrir NMEA processado");
+        menuOpenNMEA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuExtrairGPGGAActionPerformed(evt);
+                menuOpenNMEAActionPerformed(evt);
             }
         });
-        jMenu1.add(menuExtrairGPGGA);
+        jMenu1.add(menuOpenNMEA);
+
+        menuExtrairGPGGAbrutas.setText("Extrair $GPGGA brutas");
+        menuExtrairGPGGAbrutas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuExtrairGPGGAbrutasActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuExtrairGPGGAbrutas);
+
+        menuExtrairGPGGAprocessadas.setText("Extrair $GPGGA processadas");
+        menuExtrairGPGGAprocessadas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuExtrairGPGGAprocessadasActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuExtrairGPGGAprocessadas);
+
+        menuShowNMEAraw.setText("Mostrar NMEA brutas");
+        menuShowNMEAraw.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuShowNMEArawActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuShowNMEAraw);
+
+        menuShowNMEApvt.setText("Mostrar NMEA processadas");
+        menuShowNMEApvt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuShowNMEApvtActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuShowNMEApvt);
 
         jMenu3.setText("Extrair medições NMEA");
 
@@ -189,29 +232,13 @@ public class GUI_Principal extends javax.swing.JFrame {
 
         jMenu1.add(jMenu3);
 
-        menuOpenNMEA.setText("Abrir NMEA processado");
-        menuOpenNMEA.addActionListener(new java.awt.event.ActionListener() {
+        menuCompararGPGGA.setText("Comparar Medições GPGGA");
+        menuCompararGPGGA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuOpenNMEAActionPerformed(evt);
+                menuCompararGPGGAActionPerformed(evt);
             }
         });
-        jMenu1.add(menuOpenNMEA);
-
-        menuShowNMEAraw.setText("Mostrar NMEA brutas");
-        menuShowNMEAraw.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuShowNMEArawActionPerformed(evt);
-            }
-        });
-        jMenu1.add(menuShowNMEAraw);
-
-        menuShowNMEApvt.setText("Mostrar NMEA processadas");
-        menuShowNMEApvt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuShowNMEApvtActionPerformed(evt);
-            }
-        });
-        jMenu1.add(menuShowNMEApvt);
+        jMenu1.add(menuCompararGPGGA);
 
         jMenuBar1.add(jMenu1);
 
@@ -221,11 +248,17 @@ public class GUI_Principal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 488, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(208, Short.MAX_VALUE)
+                .addComponent(btnAbrirLog)
+                .addGap(205, 205, 205))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 370, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addComponent(btnAbrirLog)
+                .addContainerGap(293, Short.MAX_VALUE))
         );
 
         pack();
@@ -243,10 +276,10 @@ public class GUI_Principal extends javax.swing.JFrame {
             ControladorTeste.getInstance().abrirLog(fileName);
     }//GEN-LAST:event_menuOpenLogActionPerformed
 
-    private void menuExtrairGPGGAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtrairGPGGAActionPerformed
-       GUI_Resultado novaTela = new GUI_Resultado(this,true,Tipos_Operacoes.$GPGGA);
+    private void menuExtrairGPGGAbrutasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtrairGPGGAbrutasActionPerformed
+       GUI_Resultado novaTela = new GUI_Resultado(this,true,Tipos_Operacoes.$GPGGA_Brutas);
        novaTela.setVisible(true);
-    }//GEN-LAST:event_menuExtrairGPGGAActionPerformed
+    }//GEN-LAST:event_menuExtrairGPGGAbrutasActionPerformed
 
     private void menuOpenNMEAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuOpenNMEAActionPerformed
         String fileName = null;
@@ -325,6 +358,19 @@ public class GUI_Principal extends javax.swing.JFrame {
        novaTela.setVisible(true);
     }//GEN-LAST:event_menuShowNMEArawActionPerformed
 
+    private void menuExtrairGPGGAprocessadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtrairGPGGAprocessadasActionPerformed
+       GUI_Resultado novaTela = new GUI_Resultado(this,true,Tipos_Operacoes.$GPGGA_Processadas);
+       novaTela.setVisible(true);
+    }//GEN-LAST:event_menuExtrairGPGGAprocessadasActionPerformed
+
+    private void btnAbrirLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirLogActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAbrirLogActionPerformed
+
+    private void menuCompararGPGGAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCompararGPGGAActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuCompararGPGGAActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -362,15 +408,18 @@ public class GUI_Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAbrirLog;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem menuCompararGPGGA;
     private javax.swing.JMenuItem menuExtrairBDGSA;
     private javax.swing.JMenuItem menuExtrairBDGSV;
     private javax.swing.JMenuItem menuExtrairGAGSA;
     private javax.swing.JMenuItem menuExtrairGLGSV;
     private javax.swing.JMenuItem menuExtrairGNGSA;
-    private javax.swing.JMenuItem menuExtrairGPGGA;
+    private javax.swing.JMenuItem menuExtrairGPGGAbrutas;
+    private javax.swing.JMenuItem menuExtrairGPGGAprocessadas;
     private javax.swing.JMenuItem menuExtrairGPGSA;
     private javax.swing.JMenuItem menuExtrairGPGSV;
     private javax.swing.JMenuItem menuExtrairGPRMC;

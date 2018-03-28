@@ -11,18 +11,53 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="menuOpenLog">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+O"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Abrir log"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuOpenLogActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="menuExtrairGPGGA">
+            <MenuItem class="javax.swing.JMenuItem" name="menuOpenNMEA">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Extrair $GPGGA"/>
+                <Property name="text" type="java.lang.String" value="Abrir NMEA processado"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuExtrairGPGGAActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuOpenNMEAActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuExtrairGPGGAbrutas">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Extrair $GPGGA brutas"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuExtrairGPGGAbrutasActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuExtrairGPGGAprocessadas">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Extrair $GPGGA processadas"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuExtrairGPGGAprocessadasActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuShowNMEAraw">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Mostrar NMEA brutas"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuShowNMEArawActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuShowNMEApvt">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Mostrar NMEA processadas"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuShowNMEApvtActionPerformed"/>
               </Events>
             </MenuItem>
             <Menu class="javax.swing.JMenu" name="jMenu3">
@@ -120,28 +155,12 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
-            <MenuItem class="javax.swing.JMenuItem" name="menuOpenNMEA">
+            <MenuItem class="javax.swing.JMenuItem" name="menuCompararGPGGA">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Abrir NMEA processado"/>
+                <Property name="text" type="java.lang.String" value="Comparar Medi&#xe7;&#xf5;es GPGGA"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuOpenNMEAActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="menuShowNMEAraw">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Mostrar NMEA brutas"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuShowNMEArawActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="menuShowNMEApvt">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Mostrar NMEA processadas"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuShowNMEApvtActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuCompararGPGGAActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -173,13 +192,31 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="488" max="32767" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace pref="208" max="32767" attributes="0"/>
+              <Component id="btnAbrirLog" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="205" max="-2" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="370" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+              <Component id="btnAbrirLog" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="293" max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
   </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JButton" name="btnAbrirLog">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Abrir Log"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAbrirLogActionPerformed"/>
+      </Events>
+    </Component>
+  </SubComponents>
 </Form>
