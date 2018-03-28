@@ -20,10 +20,12 @@ public class GUI_Principal extends javax.swing.JFrame {
 
     private String abrirArquivo(String extensao, String titulo, String filtro){
         String fileName = null;
-
-        JFileChooser fileChooser = new JFileChooser();
+        String dir = System.getProperty("user.home");
+        dir += "/Desktop";
+        
+        JFileChooser fileChooser = new JFileChooser(dir);
         fileChooser.setDialogTitle(titulo);
-        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        fileChooser.setFileHidingEnabled(true);
         fileChooser.removeChoosableFileFilter(fileChooser.getChoosableFileFilters()[0]);
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter(filtro, extensao));
         
@@ -211,13 +213,14 @@ public class GUI_Principal extends javax.swing.JFrame {
 
     private void menuOpenLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuOpenLogActionPerformed
         String fileName = null;
-        String titulo = "Abra o arquivo gerado pelo GNSS Logger";
+        String titulo = "Abra o arquivo .txt gerado pelo GNSS Logger";
         String extensao = "txt";
         String filtro = "txt (*.txt)";
         
         fileName = abrirArquivo(extensao,titulo,filtro);
         
-        ControladorTeste.getInstance().abrirLog(fileName);
+        if (fileName != null)
+            ControladorTeste.getInstance().abrirLog(fileName);
     }//GEN-LAST:event_menuOpenLogActionPerformed
 
     private void menuExtrairGPGGAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtrairGPGGAActionPerformed
@@ -226,16 +229,15 @@ public class GUI_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuExtrairGPGGAActionPerformed
 
     private void menuOpenNMEAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuOpenNMEAActionPerformed
-        JOptionPane.showMessageDialog(this,"Abra o arquivo .nmea gerado pelo GNSS Analysis App.");
-               
         String fileName = null;
         String titulo = "Abra o arquivo gerado pelo GNSS Analysis App";
         String extensao = "nmea";
         String filtro = "nmea (*.nmea)";
         
         fileName = abrirArquivo(extensao,titulo,filtro);
-               
-        ControladorTeste.getInstance().abrirLog(fileName);        
+        
+        if (fileName != null)
+            ControladorTeste.getInstance().abrirLog(fileName);        
     }//GEN-LAST:event_menuOpenNMEAActionPerformed
 
     private void menuExtrairPGLORActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtrairPGLORActionPerformed
