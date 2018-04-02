@@ -25,7 +25,7 @@ public class Analise {
     private String caminhoArquivoLOG;
     private ArrayList<String> medicoesNMEA;
     private ArrayList<String> medicoesGPGGAbrutas;
-     private ArrayList<String> medicoesGPGGAprocessadas;
+    private ArrayList<String> medicoesGPGGAprocessadas;
     private ArrayList<String> medicoesProcessadas;
 
     public Analise (){
@@ -64,7 +64,7 @@ public class Analise {
         return (this.medicoesGPGGAprocessadas);  
     }
     
-    private void extrairGPGGA_brutas(){       
+    private void extrairGPGGA_brutas(){  //TODO CHAMAR SO UMA VEZ NO CONSTRUTOR OU ALGO ASSIM     
         for (String medicoesTemp : medicoesNMEA) {
             if (medicoesTemp.contains("$GPGGA"))
                 medicoesGPGGAbrutas.add(medicoesTemp);
@@ -95,7 +95,7 @@ public class Analise {
     
     public ArrayList<String> abrirArquivoProcessado(String nomeArquivo){
       lerNMEAprocessada(nomeArquivo);
-      // TODO arrumar extrairGPGGA_processadas();  
+       // TODO arrumar extrairGPGGA_processadas();  
       return (this.medicoesProcessadas);
     }
     
@@ -111,64 +111,44 @@ public class Analise {
         return null;
     }
         
-    public void compararValores(){
-        ArrayList<Comparacao> comparacoes = new ArrayList<>();
-             
+    public ArrayList<ResultadoComparacao> compararMedicoesGPGGA(){
+        ArrayList<ResultadoComparacao> comparacoes = new ArrayList<>();    
+        
+        extrairGPGGA_brutas();
+        extrairGPGGA_processadas();
         
         int i = 0;
-        while (i < medicoesGPGGAbrutas.size()) {
-            
+        while (i < medicoesGPGGAbrutas.size()) {            
             try {
-                float diferenca = 0f;
+                float diferencaLatitude = 0f;
+                float diferencaLongitude = 0f;
                 
-                diferenca = 1800f * Float.valueOf(medicoesGPGGAbrutas.get(i).split(",")[3])  -
-                            1800f * Float.valueOf(dadosProcessados.get(i)[3].toString());
-                //System.out.println("Diferença: " + diferenca);
+                diferencaLatitude = (1800f * Float.valueOf(medicoesGPGGAbrutas.get(i).split(",")[3]))  -
+                            (1800f * Float.valueOf(medicoesGPGGAprocessadas.get(i).split(",")[2]));
                 
-                Comparacao novaComparacao = new Comparacao(medicoesGPGGAbrutas.get(i).split(",")[2], "asa", "dasd");
+                diferencaLatitude = (1800f * Float.valueOf(medicoesGPGGAbrutas.get(i).split(",")[5]))  -
+                            (1800f * Float.valueOf(medicoesGPGGAprocessadas.get(i).split(",")[4]));
+                
+                ResultadoComparacao novaComparacao = new ResultadoComparacao(medicoesGPGGAbrutas.get(i).split(",")[2],
+                                                            String.valueOf(diferencaLatitude),
+                                                            String.valueOf(diferencaLongitude));
                 comparacoes.add(novaComparacao);
 
-                novaLinha += " Diferenca na latitude : " + diferenca + "\n";
             }catch (NumberFormatException ex){
-                novaLinha += " Latitude não presente na solução pvt!\n";
+                System.out.println("Valor não presente na solução pvt!\n"); // FIXME
+                // TODO USAR O MECANISMO DE LOG AQUI
             }
-
-            comparacoes.add(novaLinha);
             i++;
         }
-        novaLinha += "\n-----------------------------------------\n\n";
-        comparacoes.add(novaLinha);
-        //Comparando Longitudes
-        i = 0;
-        while (i < dadosOriginais.size()) {
-             
-            try {
-                float diferenca = 0f;
-                novaLinha = "UTC: " + dadosOriginais.get(i)[2].toString();
-                diferenca = Float.valueOf(dadosOriginais.get(i)[5].toString())  -
-                        Float.valueOf(dadosProcessados.get(i)[4].toString());
-                //System.out.println("Diferença: " + diferenca);
-
-                novaLinha += " Diferenca na longitude : " + diferenca + "\n";
-            }catch (NumberFormatException ex){
-                novaLinha += " Longitude não presente na solução pvt!\n";
-            }
-
-            comparacoes.add(novaLinha);
-            i++;
-        }
-        
-        
-        System.out.println(comparacoes);
-
+        return comparacoes;
     }
     
-    private class Comparacao{
+    public class ResultadoComparacao{
         private String UTC;
         private String diffLatitude;
         private String diffLongitude;
         
-        public Comparacao(String UTC, String diffLatitude, String diffLongitude){
+        public ResultadoComparacao(String UTC, String diffLatitude, String diffLongitude){
             this.UTC = UTC;
             this.diffLatitude = diffLatitude;
             this.diffLongitude = diffLongitude;

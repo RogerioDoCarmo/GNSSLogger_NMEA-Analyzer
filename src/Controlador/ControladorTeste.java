@@ -49,6 +49,10 @@ public class ControladorTeste {
         return result;
     }
     
+    public ArrayList<Analise.ResultadoComparacao> getComparacaoGPGGA(){
+        return analise.compararMedicoesGPGGA();
+    }
+    
     public Resultado getGPGGAbrutas(){
         ArrayList<String> dados = analise.extrairMedicoesGPGGA_brutas();        
         Resultado result = new Resultado("Medições $GPGGA brutas", dados);        
