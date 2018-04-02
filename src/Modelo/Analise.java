@@ -111,8 +111,8 @@ public class Analise {
         return null;
     }
         
-    public ArrayList<ResultadoComparacao> compararMedicoesGPGGA(){
-        ArrayList<ResultadoComparacao> comparacoes = new ArrayList<>();    
+    public ArrayList<ResultadoComparacaoGPGGA> compararMedicoesGPGGA(){
+        ArrayList<ResultadoComparacaoGPGGA> comparacoes = new ArrayList<>();    
         
         extrairGPGGA_brutas();
         extrairGPGGA_processadas();
@@ -129,7 +129,7 @@ public class Analise {
                 diferencaLatitude = (1800f * Float.valueOf(medicoesGPGGAbrutas.get(i).split(",")[5]))  -
                             (1800f * Float.valueOf(medicoesGPGGAprocessadas.get(i).split(",")[4]));
                 
-                ResultadoComparacao novaComparacao = new ResultadoComparacao(medicoesGPGGAbrutas.get(i).split(",")[2],
+                ResultadoComparacaoGPGGA novaComparacao = new ResultadoComparacaoGPGGA(medicoesGPGGAbrutas.get(i).split(",")[2],
                                                             String.valueOf(diferencaLatitude),
                                                             String.valueOf(diferencaLongitude));
                 comparacoes.add(novaComparacao);
@@ -143,12 +143,12 @@ public class Analise {
         return comparacoes;
     }
     
-    public class ResultadoComparacao{
+    public class ResultadoComparacaoGPGGA{
         private String UTC;
         private String diffLatitude;
         private String diffLongitude;
         
-        public ResultadoComparacao(String UTC, String diffLatitude, String diffLongitude){
+        public ResultadoComparacaoGPGGA(String UTC, String diffLatitude, String diffLongitude){
             this.UTC = UTC;
             this.diffLatitude = diffLatitude;
             this.diffLongitude = diffLongitude;

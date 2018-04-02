@@ -5,9 +5,12 @@
  */
 package Visao;
 
-import Controlador.ControladorTeste;
+import Controlador.Controlador;
 import Modelo.Analise;
+import java.awt.Font;
 import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -15,6 +18,8 @@ import java.util.ArrayList;
  */
 public class GUI_Resultado_Tabela extends javax.swing.JDialog {
 
+    DefaultTableModel model;
+    
     /**
      * Creates new form GUI_Resultado_Tabela
      */
@@ -24,15 +29,33 @@ public class GUI_Resultado_Tabela extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
         carregarValores();
     }
-
+    
     
     private void carregarValores() {
-        ArrayList<Analise.ResultadoComparacao> resultado = ControladorTeste.getInstance().getComparacaoGPGGA();
+        ArrayList<Analise.ResultadoComparacaoGPGGA> resultado = Controlador.getInstance().getComparacaoGPGGA();
         
-        String valores = "";
-        for (Analise.ResultadoComparacao resultadoTemp : resultado) {
-            valores.concat(resultadoTemp.getUTC() + resultadoTemp.getDiffLatitude() + resultadoTemp.getDiffLongitude() + "\n");
-            jTextField1.setText(valores);
+        setarTabela();        
+        
+        for (Analise.ResultadoComparacaoGPGGA resultadoTemp : resultado) {
+            Object[] novaLinha = new Object[]{resultadoTemp.getUTC(), resultadoTemp.getDiffLatitude(), resultadoTemp.getDiffLongitude()};
+            model.addRow(novaLinha);
+        }
+//        TODO testar essa alternativa funcional...
+//        resultado.stream().map((resultadoTemp) -> new Object[]{resultadoTemp.getUTC(), resultadoTemp.getDiffLatitude(), resultadoTemp.getDiffLongitude()}).forEachOrdered((novaLinha) -> {
+//            model.addRow(novaLinha);
+//        });
+    }
+    
+    private void setarTabela(){
+        JTableHeader header = tabela.getTableHeader();
+        header.setFont(new Font("Microsoft JhengHei UI Light", Font.PLAIN, 12));
+        model = (DefaultTableModel) tabela.getModel();
+        tabela.getColumnModel().getColumn(0).setPreferredWidth(15);
+        tabela.getColumnModel().getColumn(1).setPreferredWidth(35);
+        tabela.getColumnModel().getColumn(2).setPreferredWidth(35);
+        
+        while (tabela.getModel().getRowCount() > 0) {
+            model.removeRow(0);
         }
     }
     
@@ -45,13 +68,32 @@ public class GUI_Resultado_Tabela extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabela = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Comparação #GPGGA");
 
         jLabel1.setText("Comparação de medições NMEA $GPGGA:");
+
+        tabela.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "UTC", "Diferença na Latitude (m)", "Diferença na Longitude (m)"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tabela);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -60,10 +102,10 @@ public class GUI_Resultado_Tabela extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -72,8 +114,8 @@ public class GUI_Resultado_Tabela extends javax.swing.JDialog {
                 .addGap(44, 44, 44)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
@@ -123,6 +165,7 @@ public class GUI_Resultado_Tabela extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
 }
