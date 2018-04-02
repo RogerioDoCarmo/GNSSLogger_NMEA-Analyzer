@@ -5,7 +5,7 @@
  */
 package Visao;
 
-import Controlador.ControladorTeste;
+import Controlador.Controlador;
 import Controlador.Tipos_Operacoes;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
@@ -126,64 +126,64 @@ public class GUI_Resultado extends javax.swing.JDialog {
         ArrayList<String> medicoes = null;
         switch (operacao) {
             case $GPGGA_Brutas:
-                lblTitulo.setText(ControladorTeste.getInstance().getGPGGAbrutas().getLabel());
-                medicoes = ControladorTeste.getInstance().getGPGGAbrutas().getDados();
+                lblTitulo.setText(Controlador.getInstance().getGPGGAbrutas().getLabel());
+                medicoes = Controlador.getInstance().getGPGGAbrutas().getDados();
             break;
             case $GPGGA_Processadas:
-                lblTitulo.setText(ControladorTeste.getInstance().getGPGGAprocessadas().getLabel());
-                medicoes = ControladorTeste.getInstance().getGPGGAprocessadas().getDados();
+                lblTitulo.setText(Controlador.getInstance().getGPGGAprocessadas().getLabel());
+                medicoes = Controlador.getInstance().getGPGGAprocessadas().getDados();
             break;
             case $PGLOR:
-                lblTitulo.setText(ControladorTeste.getInstance().getPGLOR().getLabel());
-                medicoes = ControladorTeste.getInstance().getPGLOR().getDados();
+                lblTitulo.setText(Controlador.getInstance().getPGLOR().getLabel());
+                medicoes = Controlador.getInstance().getPGLOR().getDados();
             break;
             case $GPGSV:
-                lblTitulo.setText(ControladorTeste.getInstance().getGPGSV().getLabel());
-                medicoes = ControladorTeste.getInstance().getGPGSV().getDados();
+                lblTitulo.setText(Controlador.getInstance().getGPGSV().getLabel());
+                medicoes = Controlador.getInstance().getGPGSV().getDados();
             break;
             case $GLGSV:
-                lblTitulo.setText(ControladorTeste.getInstance().getGLGSV().getLabel());
-                medicoes = ControladorTeste.getInstance().getGLGSV().getDados();
+                lblTitulo.setText(Controlador.getInstance().getGLGSV().getLabel());
+                medicoes = Controlador.getInstance().getGLGSV().getDados();
             break;
             case $BDGSV:
-                lblTitulo.setText(ControladorTeste.getInstance().getBDGSV().getLabel());
-                medicoes = ControladorTeste.getInstance().getBDGSV().getDados();
+                lblTitulo.setText(Controlador.getInstance().getBDGSV().getLabel());
+                medicoes = Controlador.getInstance().getBDGSV().getDados();
             break;
             case $GPGSA:
-                lblTitulo.setText(ControladorTeste.getInstance().getGPGSA().getLabel());
-                medicoes = ControladorTeste.getInstance().getGPGSA().getDados();
+                lblTitulo.setText(Controlador.getInstance().getGPGSA().getLabel());
+                medicoes = Controlador.getInstance().getGPGSA().getDados();
             break;
             case $GNGSA:
-                lblTitulo.setText(ControladorTeste.getInstance().getGNGSA().getLabel());
-                medicoes = ControladorTeste.getInstance().getGNGSA().getDados();
+                lblTitulo.setText(Controlador.getInstance().getGNGSA().getLabel());
+                medicoes = Controlador.getInstance().getGNGSA().getDados();
             break;
             case $QZGSA:
-                lblTitulo.setText(ControladorTeste.getInstance().getQZGSA().getLabel());
-                medicoes = ControladorTeste.getInstance().getQZGSA().getDados();
+                lblTitulo.setText(Controlador.getInstance().getQZGSA().getLabel());
+                medicoes = Controlador.getInstance().getQZGSA().getDados();
             break;
             case $IMGSA:
-                lblTitulo.setText(ControladorTeste.getInstance().getIMGSA().getLabel());
-                medicoes = ControladorTeste.getInstance().getIMGSA().getDados();
+                lblTitulo.setText(Controlador.getInstance().getIMGSA().getLabel());
+                medicoes = Controlador.getInstance().getIMGSA().getDados();
             break;
             case $BDGSA:
-                lblTitulo.setText(ControladorTeste.getInstance().getBDGSA().getLabel());
-                medicoes = ControladorTeste.getInstance().getBDGSA().getDados();
+                lblTitulo.setText(Controlador.getInstance().getBDGSA().getLabel());
+                medicoes = Controlador.getInstance().getBDGSA().getDados();
             break;
             case $GAGSA:
-                lblTitulo.setText(ControladorTeste.getInstance().getGAGSA().getLabel());
-                medicoes = ControladorTeste.getInstance().getGAGSA().getDados();
+                lblTitulo.setText(Controlador.getInstance().getGAGSA().getLabel());
+                medicoes = Controlador.getInstance().getGAGSA().getDados();
             break;
             case $GPRMC:
-                lblTitulo.setText(ControladorTeste.getInstance().getGPRMC().getLabel());
-                medicoes = ControladorTeste.getInstance().getGPRMC().getDados();
+                lblTitulo.setText(Controlador.getInstance().getGPRMC().getLabel());
+                medicoes = Controlador.getInstance().getGPRMC().getDados();
             break;
             case MEDICOES_BRUTAS:
-                lblTitulo.setText(ControladorTeste.getInstance().getMedicoesBrutas().getLabel());
-                medicoes = ControladorTeste.getInstance().getMedicoesBrutas().getDados();
+                lblTitulo.setText(Controlador.getInstance().getMedicoesBrutas().getLabel());
+                medicoes = Controlador.getInstance().getMedicoesBrutas().getDados();
             break;
             case MEDICOES_PROCESSADAS:
-                lblTitulo.setText(ControladorTeste.getInstance().getMedicoesProcessadas().getLabel());
-                medicoes = ControladorTeste.getInstance().getMedicoesProcessadas().getDados();
+                lblTitulo.setText(Controlador.getInstance().getMedicoesProcessadas().getLabel());
+                medicoes = Controlador.getInstance().getMedicoesProcessadas().getDados();
             break;
         }        
        

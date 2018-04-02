@@ -1,6 +1,7 @@
 package Controlador;
 
 import Modelo.Analise;
+import Modelo.Analise.ResultadoComparacaoGPGGA;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -8,19 +9,19 @@ import java.util.Date;
  *
  * @author Rogerio
  */
-public class ControladorTeste {
+public class Controlador {
     
     static Analise analise;
-    private static ControladorTeste uniqueInstance;
+    private static Controlador uniqueInstance;
     
-    private ControladorTeste(){
+    private Controlador(){
         
     }
     
-    public static synchronized ControladorTeste getInstance() {
+    public static synchronized Controlador getInstance() {
 		if (uniqueInstance == null){
-                    ControladorTeste.analise = new Analise();
-                    uniqueInstance = new ControladorTeste();
+                    Controlador.analise = new Analise();
+                    uniqueInstance = new Controlador();
                 }
 			
 		return uniqueInstance;
@@ -49,7 +50,7 @@ public class ControladorTeste {
         return result;
     }
     
-    public ArrayList<Analise.ResultadoComparacao> getComparacaoGPGGA(){
+    public ArrayList<ResultadoComparacaoGPGGA> getComparacaoGPGGA(){
         return analise.compararMedicoesGPGGA();
     }
     

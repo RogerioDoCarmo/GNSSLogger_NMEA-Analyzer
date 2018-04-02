@@ -5,7 +5,7 @@
  */
 package Visao;
 
-import Controlador.ControladorTeste;
+import Controlador.Controlador;
 import Controlador.Tipos_Operacoes;
 import java.io.File;
 import javax.swing.JFileChooser;
@@ -67,6 +67,7 @@ public class GUI_Principal extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtNMEA = new javax.swing.JTextField();
         btnAbrirLog1 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuOpenLog = new javax.swing.JMenuItem();
@@ -75,6 +76,7 @@ public class GUI_Principal extends javax.swing.JFrame {
         menuShowNMEApvt = new javax.swing.JMenuItem();
         menuExtrairGPGGAbrutas = new javax.swing.JMenuItem();
         menuExtrairGPGGAprocessadas = new javax.swing.JMenuItem();
+        menuCompararGPGGA = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         menuExtrairPGLOR = new javax.swing.JMenuItem();
         menuExtrairGPGSV = new javax.swing.JMenuItem();
@@ -87,7 +89,6 @@ public class GUI_Principal extends javax.swing.JFrame {
         menuExtrairBDGSA = new javax.swing.JMenuItem();
         menuExtrairGAGSA = new javax.swing.JMenuItem();
         menuExtrairGPRMC = new javax.swing.JMenuItem();
-        menuCompararGPGGA = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GNSS Logger - NMEA Analyzer");
@@ -113,6 +114,13 @@ public class GUI_Principal extends javax.swing.JFrame {
         btnAbrirLog1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAbrirLog1ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Comparar Medições $GPGGA");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -152,7 +160,7 @@ public class GUI_Principal extends javax.swing.JFrame {
         });
         jMenu1.add(menuShowNMEApvt);
 
-        menuExtrairGPGGAbrutas.setText("Extrair $GPGGA brutas");
+        menuExtrairGPGGAbrutas.setText("Mostrar $GPGGA brutas");
         menuExtrairGPGGAbrutas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuExtrairGPGGAbrutasActionPerformed(evt);
@@ -160,7 +168,7 @@ public class GUI_Principal extends javax.swing.JFrame {
         });
         jMenu1.add(menuExtrairGPGGAbrutas);
 
-        menuExtrairGPGGAprocessadas.setText("Extrair $GPGGA processadas");
+        menuExtrairGPGGAprocessadas.setText("Mostrar $GPGGA processadas");
         menuExtrairGPGGAprocessadas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuExtrairGPGGAprocessadasActionPerformed(evt);
@@ -168,7 +176,15 @@ public class GUI_Principal extends javax.swing.JFrame {
         });
         jMenu1.add(menuExtrairGPGGAprocessadas);
 
-        jMenu3.setText("Extrair medições NMEA");
+        menuCompararGPGGA.setText("Comparar Medições $GPGGA");
+        menuCompararGPGGA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCompararGPGGAActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuCompararGPGGA);
+
+        jMenu3.setText("Extrair outras medições NMEA");
 
         menuExtrairPGLOR.setText("Extrair $PGLOR");
         menuExtrairPGLOR.addActionListener(new java.awt.event.ActionListener() {
@@ -260,14 +276,6 @@ public class GUI_Principal extends javax.swing.JFrame {
 
         jMenu1.add(jMenu3);
 
-        menuCompararGPGGA.setText("Comparar Medições GPGGA");
-        menuCompararGPGGA.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuCompararGPGGAActionPerformed(evt);
-            }
-        });
-        jMenu1.add(menuCompararGPGGA);
-
         jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
@@ -285,10 +293,12 @@ public class GUI_Principal extends javax.swing.JFrame {
                             .addComponent(jLabel2))
                         .addContainerGap(316, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNMEA, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
-                            .addComponent(txtLog))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton1)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtNMEA, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
+                                .addComponent(txtLog)))
+                        .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnAbrirLog, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnAbrirLog1))
@@ -309,7 +319,9 @@ public class GUI_Principal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNMEA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAbrirLog1))
-                .addContainerGap(249, Short.MAX_VALUE))
+                .addGap(77, 77, 77)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(80, Short.MAX_VALUE))
         );
 
         pack();
@@ -323,7 +335,7 @@ public class GUI_Principal extends javax.swing.JFrame {
         fileNameLOG = abrirArquivo(extensao,titulo,filtro);
         
         if (fileNameLOG != null)
-            ControladorTeste.getInstance().abrirLog(fileNameLOG);
+            Controlador.getInstance().abrirLog(fileNameLOG);
     }//GEN-LAST:event_menuOpenLogActionPerformed
 
     private void menuExtrairGPGGAbrutasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtrairGPGGAbrutasActionPerformed
@@ -339,7 +351,7 @@ public class GUI_Principal extends javax.swing.JFrame {
         fileNameNMEA = abrirArquivo(extensao,titulo,filtro);
         
         if (fileNameNMEA != null)
-            ControladorTeste.getInstance().abrirMedicoesProcessadas(fileNameNMEA);        
+            Controlador.getInstance().abrirMedicoesProcessadas(fileNameNMEA);        
     }//GEN-LAST:event_menuOpenNMEAActionPerformed
 
     private void menuExtrairPGLORActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtrairPGLORActionPerformed
@@ -427,6 +439,10 @@ public class GUI_Principal extends javax.swing.JFrame {
         txtNMEA.setText(fileNameNMEA);
     }//GEN-LAST:event_btnAbrirLog1ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        menuCompararGPGGAActionPerformed(null);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -466,6 +482,7 @@ public class GUI_Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAbrirLog;
     private javax.swing.JButton btnAbrirLog1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
