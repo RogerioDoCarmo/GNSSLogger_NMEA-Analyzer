@@ -126,7 +126,7 @@ public class Analise {
                 diferencaLatitude = (1800f * Float.valueOf(medicoesGPGGAbrutas.get(i).split(",")[3]))  -
                             (1800f * Float.valueOf(medicoesGPGGAprocessadas.get(i).split(",")[2]));
                 
-                diferencaLatitude = (1800f * Float.valueOf(medicoesGPGGAbrutas.get(i).split(",")[5]))  -
+                diferencaLongitude = (1800f * Float.valueOf(medicoesGPGGAbrutas.get(i).split(",")[5]))  -
                             (1800f * Float.valueOf(medicoesGPGGAprocessadas.get(i).split(",")[4]));
                 
                 ResultadoComparacaoGPGGA novaComparacao = new ResultadoComparacaoGPGGA(medicoesGPGGAbrutas.get(i).split(",")[2],
