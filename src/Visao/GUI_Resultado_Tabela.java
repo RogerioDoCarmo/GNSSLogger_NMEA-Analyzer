@@ -9,6 +9,8 @@ import Controlador.Controlador;
 import Modelo.Analise;
 import java.awt.Font;
 import java.util.ArrayList;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
@@ -18,7 +20,8 @@ import javax.swing.table.JTableHeader;
  */
 public class GUI_Resultado_Tabela extends javax.swing.JDialog {
 
-    DefaultTableModel model;
+    private boolean flag_conteudo;
+    private DefaultTableModel model;
     
     /**
      * Creates new form GUI_Resultado_Tabela
@@ -27,14 +30,65 @@ public class GUI_Resultado_Tabela extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
+        
+        // TODO Refatorar esse mecanismo de verificação!
+        this.flag_conteudo = true;        
+        verificarArquivosAbertos();
+        
+        if (!this.flag_conteudo){
+            this.setVisible(false);
+            this.dispose();
+            return;
+        }else{
+            //this.setVisible(true);
+        }
+        
+        this.flag_conteudo = true;
         carregarValores();
+        
+        if (!this.flag_conteudo){
+            this.setVisible(false);
+            this.dispose();
+            return;
+        }else{
+            this.setVisible(true);
+        }
     }
     
+    private boolean verificarArquivosAbertos(){
+        if (!Controlador.getInstance().possuiLogAberto()){
+            JOptionPane optionPane = new JOptionPane("O arquivo de log não foi aberto!", JOptionPane.ERROR_MESSAGE);
+            JDialog dialog = optionPane.createDialog("Erro");
+            dialog.setAlwaysOnTop(true);
+            dialog.setVisible(true);
+            this.flag_conteudo = false;
+            return false;
+        }
+        
+        if (!Controlador.getInstance().possuiNMEAAberto()){
+            JOptionPane optionPane = new JOptionPane("O arquivo NMEA processado não foi aberto!", JOptionPane.ERROR_MESSAGE);
+            JDialog dialog = optionPane.createDialog("Erro");
+            dialog.setAlwaysOnTop(true);
+            dialog.setVisible(true);
+            this.flag_conteudo = false;
+            return false;
+        }
+        return true;
+    }
     
     private void carregarValores() {
         ArrayList<Analise.ResultadoComparacaoGPGGA> resultado = Controlador.getInstance().getComparacaoGPGGA();
         
         setarTabela();        
+        
+        if (resultado == null || resultado.isEmpty()) {
+            JOptionPane optionPane = new JOptionPane("O arquivo de não possui medições NMEA!", JOptionPane.ERROR_MESSAGE);
+            JDialog dialog = optionPane.createDialog("Erro");
+            dialog.setAlwaysOnTop(true);
+            dialog.setVisible(true);
+            this.flag_conteudo = false;
+            return;
+        }
         
         for (Analise.ResultadoComparacaoGPGGA resultadoTemp : resultado) {
             Object[] novaLinha = new Object[]{resultadoTemp.getUTC(), resultadoTemp.getDiffLatitude(), resultadoTemp.getDiffLongitude()};

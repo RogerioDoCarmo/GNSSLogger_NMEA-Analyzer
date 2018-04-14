@@ -9,6 +9,8 @@ import Controlador.Controlador;
 import Controlador.Tipos_Operacoes;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,6 +18,8 @@ import javax.swing.DefaultListModel;
  */
 public class GUI_Resultado extends javax.swing.JDialog {
 
+    private boolean flag_conteudo;
+    
     /**
      * Creates new form GUI_Resultado
      */
@@ -23,7 +27,14 @@ public class GUI_Resultado extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
+        this.flag_conteudo = true;
         carregarValores(operacao);
+        if (!this.flag_conteudo){
+            this.setVisible(false);
+            this.dispose();
+        }else{
+            this.setVisible(true);
+        }        
     }
 
     /**
@@ -185,8 +196,17 @@ public class GUI_Resultado extends javax.swing.JDialog {
                 lblTitulo.setText(Controlador.getInstance().getMedicoesProcessadas().getLabel());
                 medicoes = Controlador.getInstance().getMedicoesProcessadas().getDados();
             break;
-        }        
-       
+        }
+
+        if (medicoes == null || medicoes.isEmpty()) {
+            JOptionPane optionPane = new JOptionPane("O arquivo de log não possui medições NMEA!", JOptionPane.ERROR_MESSAGE);
+            JDialog dialog = optionPane.createDialog("Erro");
+            dialog.setAlwaysOnTop(true);
+            dialog.setVisible(true);
+            this.flag_conteudo = false;
+            return;
+        }
+
         DefaultListModel listModel = new DefaultListModel();
         
         for (String medicao : medicoes) {
