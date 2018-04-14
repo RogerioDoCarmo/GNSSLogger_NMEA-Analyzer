@@ -332,8 +332,10 @@ public class GUI_Principal extends javax.swing.JFrame {
         
         fileNameLOG = abrirArquivo(extensao,titulo,filtro);
         
-        if (fileNameLOG != null)
+        if (fileNameLOG != null){
             Controlador.getInstance().abrirLog(fileNameLOG);
+            txtLog.setText(fileNameLOG);
+        }            
     }//GEN-LAST:event_menuOpenLogActionPerformed
 
     private void menuExtrairGPGGAbrutasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtrairGPGGAbrutasActionPerformed
@@ -348,8 +350,10 @@ public class GUI_Principal extends javax.swing.JFrame {
         
         fileNameNMEA = abrirArquivo(extensao,titulo,filtro);
         
-        if (fileNameNMEA != null)
-            Controlador.getInstance().abrirMedicoesProcessadas(fileNameNMEA);        
+        if (fileNameNMEA != null){
+            Controlador.getInstance().abrirMedicoesProcessadas(fileNameNMEA);
+            txtNMEA.setText(fileNameLOG);
+        }        
     }//GEN-LAST:event_menuOpenNMEAActionPerformed
 
     private void menuExtrairPGLORActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtrairPGLORActionPerformed
@@ -414,7 +418,6 @@ public class GUI_Principal extends javax.swing.JFrame {
 
     private void menuShowNMEArawActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuShowNMEArawActionPerformed
        GUI_Resultado novaTela = new GUI_Resultado(this,true,Tipos_Operacoes.MEDICOES_BRUTAS);
-       novaTela.setVisible(true);
     }//GEN-LAST:event_menuShowNMEArawActionPerformed
 
     private void menuExtrairGPGGAprocessadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtrairGPGGAprocessadasActionPerformed
@@ -429,7 +432,6 @@ public class GUI_Principal extends javax.swing.JFrame {
 
     private void menuCompararGPGGAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCompararGPGGAActionPerformed
         GUI_Resultado_Tabela novaTela = new GUI_Resultado_Tabela(this, true);
-        novaTela.setVisible(true);
     }//GEN-LAST:event_menuCompararGPGGAActionPerformed
 
     private void btnAbrirLog1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirLog1ActionPerformed

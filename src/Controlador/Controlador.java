@@ -13,6 +13,8 @@ public class Controlador {
     
     static Analise analise;
     private static Controlador uniqueInstance;
+    private static String fileNameLOG;
+    private static String fileNameNMEA;
     
     private Controlador(){
         
@@ -21,21 +23,32 @@ public class Controlador {
     public static synchronized Controlador getInstance() {
 		if (uniqueInstance == null){
                     Controlador.analise = new Analise();
+                    Controlador.fileNameLOG = null;
+                    Controlador.fileNameNMEA = null;
                     uniqueInstance = new Controlador();
-                }
-			
+                }			
 		return uniqueInstance;
     }
     
     public boolean abrirLog(String caminhoArquivo){
         analise.lerLogFile(caminhoArquivo);
+        this.fileNameLOG = caminhoArquivo;
         return true;
     }
     
     public boolean abrirMedicoesProcessadas(String caminhoArquivo){
-        analise.abrirArquivoProcessado(caminhoArquivo); 
-//        analise.extrairGPGGA_processadas();
+        analise.abrirArquivoProcessado(caminhoArquivo);
+        this.fileNameNMEA = caminhoArquivo;
+//        analise.extrairGPGGA_processadas(); FIXME
         return true;
+    }
+    
+    public boolean possuiLogAberto(){
+        return (Controlador.fileNameLOG != null);
+    }
+    
+    public boolean possuiNMEAAberto(){
+        return (Controlador.fileNameNMEA != null);
     }
     
     public Resultado getMedicoesBrutas(){

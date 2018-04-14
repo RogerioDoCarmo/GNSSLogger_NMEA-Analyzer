@@ -64,11 +64,12 @@ public class Analise {
         return (this.medicoesGPGGAprocessadas);  
     }
     
-    private void extrairGPGGA_brutas(){  //TODO CHAMAR SO UMA VEZ NO CONSTRUTOR OU ALGO ASSIM     
+    private boolean extrairGPGGA_brutas(){  //TODO CHAMAR SO UMA VEZ NO CONSTRUTOR OU ALGO ASSIM     
         for (String medicoesTemp : medicoesNMEA) {
             if (medicoesTemp.contains("$GPGGA"))
                 medicoesGPGGAbrutas.add(medicoesTemp);
         }
+        return !medicoesGPGGAbrutas.isEmpty();
     }
     
     private void extrairGPGGA_processadas(){       
