@@ -77,11 +77,11 @@ public class GUI_Resultado_Tabela extends javax.swing.JDialog {
     }
     
     private void carregarValores() {
-        ArrayList<Analise.ResultadoComparacaoGPGGA> resultado = Controlador.getInstance().getComparacaoGPGGA();
+        Analise.ResultadoComparacaoGPGGA resultado = Controlador.getInstance().getComparacaoGPGGA();
         
         setarTabela();        
         
-        if (resultado == null || resultado.isEmpty()) {
+        if (resultado == null) { // TODO estava assim, || resultado.isEmpty()) ARRUMAR
             JOptionPane optionPane = new JOptionPane("O arquivo de não possui medições NMEA!", JOptionPane.ERROR_MESSAGE);
             JDialog dialog = optionPane.createDialog("Erro");
             dialog.setAlwaysOnTop(true);
@@ -90,14 +90,22 @@ public class GUI_Resultado_Tabela extends javax.swing.JDialog {
             return;
         }
         
-        for (Analise.ResultadoComparacaoGPGGA resultadoTemp : resultado) {
-            Object[] novaLinha = new Object[]{resultadoTemp.getUTC(), resultadoTemp.getDiffLatitude(), resultadoTemp.getDiffLongitude()};
+//        for (resultado.getComparacoes(); resultado) { // FIXME
+//            Object[] novaLinha = new Object[]{resultadoTemp.getUTC(), resultadoTemp.getDiffLatitude(), resultadoTemp.getDiffLongitude()};
+//            model.addRow(novaLinha);
+//        }
+        
+        for (int i = 0; i < resultado.getComparacoes().size(); i++){
+             Object[] novaLinha = new Object[]{resultado.getComparacoes().get(i).getUTC(),
+                                               resultado.getComparacoes().get(i).getDiffLatitude(),
+                                               resultado.getComparacoes().get(i).getDiffLongitude()};
+             
             model.addRow(novaLinha);
-        }
 //        TODO testar essa alternativa funcional...
 //        resultado.stream().map((resultadoTemp) -> new Object[]{resultadoTemp.getUTC(), resultadoTemp.getDiffLatitude(), resultadoTemp.getDiffLongitude()}).forEachOrdered((novaLinha) -> {
 //            model.addRow(novaLinha);
 //        });
+        }
     }
     
     private void setarTabela(){
@@ -125,6 +133,8 @@ public class GUI_Resultado_Tabela extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Comparação #GPGGA");
@@ -149,6 +159,10 @@ public class GUI_Resultado_Tabela extends javax.swing.JDialog {
         });
         jScrollPane2.setViewportView(tabela);
 
+        jLabel2.setText("Media Longitude");
+
+        jLabel3.setText("Media Laititude");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -161,6 +175,12 @@ public class GUI_Resultado_Tabela extends javax.swing.JDialog {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,7 +189,11 @@ public class GUI_Resultado_Tabela extends javax.swing.JDialog {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -219,6 +243,8 @@ public class GUI_Resultado_Tabela extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables

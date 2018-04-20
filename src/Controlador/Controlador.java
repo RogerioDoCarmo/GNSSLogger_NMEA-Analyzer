@@ -63,7 +63,7 @@ public class Controlador {
         return result;
     }
     
-    public ArrayList<ResultadoComparacaoGPGGA> getComparacaoGPGGA(){
+    public ResultadoComparacaoGPGGA getComparacaoGPGGA(){
         return analise.compararMedicoesGPGGA();
     }
     

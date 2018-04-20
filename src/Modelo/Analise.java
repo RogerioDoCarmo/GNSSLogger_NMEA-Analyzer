@@ -59,113 +59,181 @@ public class Analise {
     
     public ArrayList<String> extrairMedicoesGPGGA_processadas(){
         if (!leituraMedicoes) // FIXME Arrumar aqui!
-            lerLogFile(caminhoArquivoLOG);        
+        {
+            lerLogFile(caminhoArquivoLOG);
+        }
         extrairGPGGA_processadas();
-        return (this.medicoesGPGGAprocessadas);  
+        return (this.medicoesGPGGAprocessadas);
     }
-    
-    private boolean extrairGPGGA_brutas(){  //TODO CHAMAR SO UMA VEZ NO CONSTRUTOR OU ALGO ASSIM     
+
+    private boolean extrairGPGGA_brutas() {  //TODO CHAMAR SO UMA VEZ NO CONSTRUTOR OU ALGO ASSIM     
         for (String medicoesTemp : medicoesNMEA) {
-            if (medicoesTemp.contains("$GPGGA"))
+            if (medicoesTemp.contains("$GPGGA")) {
                 medicoesGPGGAbrutas.add(medicoesTemp);
+            }
         }
         return !medicoesGPGGAbrutas.isEmpty();
     }
-    
-    private void extrairGPGGA_processadas(){       
+
+    private void extrairGPGGA_processadas() {
         for (String medicoesTemp : medicoesProcessadas) {
-            if (medicoesTemp.contains("$GPGGA"))
+            if (medicoesTemp.contains("$GPGGA")) {
                 medicoesGPGGAprocessadas.add(medicoesTemp);
+            }
         }
     }
-    
-    public ArrayList<String> extrairMedicaoBruta(String tipoNMEA){
-       if (!leituraMedicoes){
-            lerLogFile(caminhoArquivoLOG);            
+
+    public ArrayList<String> extrairMedicaoBruta(String tipoNMEA) {
+        if (!leituraMedicoes) {
+            lerLogFile(caminhoArquivoLOG);
         }
-        
+
         ArrayList<String> medidas = new ArrayList<>();
-       
-       for (String medicoesTemp : medicoesNMEA) {
-            if (medicoesTemp.contains(tipoNMEA))
+
+        for (String medicoesTemp : medicoesNMEA) {
+            if (medicoesTemp.contains(tipoNMEA)) {
                 medidas.add(medicoesTemp);
-        }   
-       
-       return medidas;
+            }
+        }
+
+        return medidas;
     }
-    
-    public ArrayList<String> abrirArquivoProcessado(String nomeArquivo){
-      lerNMEAprocessada(nomeArquivo);
-       // TODO arrumar extrairGPGGA_processadas();  
-      return (this.medicoesProcessadas);
+
+    public ArrayList<String> abrirArquivoProcessado(String nomeArquivo) {
+        lerNMEAprocessada(nomeArquivo);
+        // TODO arrumar extrairGPGGA_processadas();  
+        return (this.medicoesProcessadas);
     }
-    
-    public ArrayList<String> extrairMedicoesBrutas(){
-        if (!this.medicoesNMEA.isEmpty())
-                return this.medicoesNMEA;
+
+    public ArrayList<String> extrairMedicoesBrutas() {
+        if (!this.medicoesNMEA.isEmpty()) {
+            return this.medicoesNMEA;
+        }
         return null;
     }
-    
-    public ArrayList<String> extrairMedicoesProcessadas(){
-               if (!this.medicoesProcessadas.isEmpty())
-                return this.medicoesProcessadas;
+
+    public ArrayList<String> extrairMedicoesProcessadas() {
+        if (!this.medicoesProcessadas.isEmpty()) {
+            return this.medicoesProcessadas;
+        }
         return null;
     }
-        
-    public ArrayList<ResultadoComparacaoGPGGA> compararMedicoesGPGGA(){
-        ArrayList<ResultadoComparacaoGPGGA> comparacoes = new ArrayList<>();    
-        
+
+    public ResultadoComparacaoGPGGA compararMedicoesGPGGA() {
+
+        ResultadoComparacaoGPGGA resultado = new ResultadoComparacaoGPGGA();
+
         extrairGPGGA_brutas();
         extrairGPGGA_processadas();
-        
+
         int i = 0;
-        while (i < medicoesGPGGAbrutas.size()) {            
+        while (i < medicoesGPGGAbrutas.size()) {
             try {
                 float diferencaLatitude = 0f;
                 float diferencaLongitude = 0f;
-                
-                diferencaLatitude = (1800f * Float.valueOf(medicoesGPGGAbrutas.get(i).split(",")[3]))  -
-                            (1800f * Float.valueOf(medicoesGPGGAprocessadas.get(i).split(",")[2]));
-                
-                diferencaLongitude = (1800f * Float.valueOf(medicoesGPGGAbrutas.get(i).split(",")[5]))  -
-                            (1800f * Float.valueOf(medicoesGPGGAprocessadas.get(i).split(",")[4]));
-                
-                ResultadoComparacaoGPGGA novaComparacao = new ResultadoComparacaoGPGGA(medicoesGPGGAbrutas.get(i).split(",")[2],
-                                                            String.valueOf(diferencaLatitude),
-                                                            String.valueOf(diferencaLongitude));
-                comparacoes.add(novaComparacao);
 
-            }catch (NumberFormatException ex){
+                diferencaLatitude = (1800f * Float.valueOf(medicoesGPGGAbrutas.get(i).split(",")[3]))
+                        - (1800f * Float.valueOf(medicoesGPGGAprocessadas.get(i).split(",")[2]));
+
+                diferencaLongitude = (1800f * Float.valueOf(medicoesGPGGAbrutas.get(i).split(",")[5]))
+                        - (1800f * Float.valueOf(medicoesGPGGAprocessadas.get(i).split(",")[4]));
+
+                resultado.adicionarComparacao(medicoesGPGGAbrutas.get(i).split(",")[2],
+                                                     String.valueOf(diferencaLatitude),
+                                                     String.valueOf(diferencaLongitude));
+            } catch (NumberFormatException ex) {
                 System.out.println("Valor não presente na solução pvt!\n"); // FIXME
                 // TODO USAR O MECANISMO DE LOG AQUI
             }
             i++;
         }
-        return comparacoes;
-    }
-    
-    public class ResultadoComparacaoGPGGA{
-        private String UTC;
-        private String diffLatitude;
-        private String diffLongitude;
         
-        public ResultadoComparacaoGPGGA(String UTC, String diffLatitude, String diffLongitude){
-            this.UTC = UTC;
-            this.diffLatitude = diffLatitude;
-            this.diffLongitude = diffLongitude;
+        resultado.calcMediaLatitude();
+        resultado.calcMediaLongitude();
+        return resultado;
+    }
+
+    public class ResultadoComparacaoGPGGA {
+        private ArrayList<ComparacaoGPGGA> comparacoes; // FIXME Arrumar os atributos de visibilidade
+        float mediaDiffLatitude;
+        float mediaDiffLongitude;
+                
+        public ResultadoComparacaoGPGGA(){
+            this.comparacoes = new ArrayList<>();
+            this.mediaDiffLatitude = 0f;
+            this.mediaDiffLongitude = 0f;
+        }
+
+        public boolean adicionarComparacao(String UTC, String diffLatitude, String diffLongitude){
+            if (this.getComparacoes() == null) return false;
+            
+            ComparacaoGPGGA novaComparacao = new ComparacaoGPGGA(UTC, diffLatitude, diffLongitude);            
+            this.getComparacoes().add(novaComparacao);
+            return true;
         }
         
-        public String getUTC(){
-            return this.UTC;
-        }        
-        public String getDiffLatitude(){
-            return this.diffLatitude;
+        public float getMediaLatitude(){
+            return this.mediaDiffLatitude;
         }
-        public String getDiffLongitude(){
-            return this.diffLongitude;
+        
+        public float getMediaLongitude(){
+            return this.mediaDiffLongitude;
+        }
+        
+        public float calcMediaLatitude(){
+            if (getComparacoes() == null || getComparacoes().isEmpty()) return -1f;
+            for (ComparacaoGPGGA comp : getComparacoes()) {
+                this.mediaDiffLatitude += Float.parseFloat(comp.diffLatitude);
+            }
+            this.mediaDiffLatitude = this.mediaDiffLatitude / (float) getComparacoes().size();
+            
+            return this.mediaDiffLatitude;
+        }
+        
+        public float calcMediaLongitude(){
+            if (getComparacoes() == null || getComparacoes().isEmpty()) return -1f;
+            for (ComparacaoGPGGA comp : getComparacoes()) {
+                this.mediaDiffLongitude += Float.parseFloat(comp.diffLongitude);
+            }
+            this.mediaDiffLongitude = this.mediaDiffLongitude / (float) getComparacoes().size();
+            
+            return this.mediaDiffLongitude;
+        }
+        
+        public class ComparacaoGPGGA {
+
+            private String UTC;
+            private String diffLatitude;
+            private String diffLongitude;
+
+            public ComparacaoGPGGA(String UTC, String diffLatitude, String diffLongitude) {
+                this.UTC = UTC;
+                this.diffLatitude = diffLatitude;
+                this.diffLongitude = diffLongitude;
+            }
+
+            public String getUTC() {
+                return this.UTC;
+            }
+
+            public String getDiffLatitude() {
+                return this.diffLatitude;
+            }
+
+            public String getDiffLongitude() {
+                return this.diffLongitude;
+            }
+        }
+
+        /**
+         * @return the comparacoes
+         */
+        public ArrayList<ComparacaoGPGGA> getComparacoes() { // TODO ARRUMAR ESSA GAMBIARRA
+            return comparacoes;
         }
     }
-    
+
+
     public void lerLogFile(String caminhoArquivo) {       
         String line = "";
 
