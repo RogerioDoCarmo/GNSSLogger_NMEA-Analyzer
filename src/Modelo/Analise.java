@@ -121,53 +121,12 @@ public class Analise {
     }
 
     public ResultadoComparacaoGPGGA compararMedicoesGPGGA() {
-
-        compararMedicoesGPGGA_RMS(); // FIXME TIRAR ISSO URGENTE!
-        
         ResultadoComparacaoGPGGA resultado = new ResultadoComparacaoGPGGA();
 
         extrairGPGGA_brutas();
         extrairGPGGA_processadas();
 
-        int i = 0;
-        while (i < medicoesGPGGAbrutas.size()) {
-            try {
-                float diferencaLatitude = 0f;
-                float diferencaLongitude = 0f;
-
-                diferencaLatitude = 
-                        (1800f * Float.valueOf(medicoesGPGGAprocessadas.get(i).split(",")[2])) -
-                        
-                        (1800f * Float.valueOf(medicoesGPGGAbrutas.get(i).split(",")[3]));
-
-                diferencaLongitude = (1800f * Float.valueOf(medicoesGPGGAprocessadas.get(i).split(",")[4]))
-                        - (1800f * Float.valueOf(medicoesGPGGAbrutas.get(i).split(",")[5]));
-                
-
-                resultado.adicionarComparacao(medicoesGPGGAbrutas.get(i).split(",")[2],
-                                                     String.valueOf(diferencaLatitude),
-                                                     String.valueOf(diferencaLongitude));
-            } catch (NumberFormatException ex) {
-                System.out.println("Valor não presente na solução pvt!\n"); // FIXME
-                // TODO USAR O MECANISMO DE LOG AQUI
-            }
-            i++;
-        }
-        
-        resultado.calcMediaLatitude();
-        resultado.calcMediaLongitude();
-        return resultado;
-    }
-
-    public ResultadoComparacaoGPGGA compararMedicoesGPGGA_RMS() {
-
-        ResultadoComparacaoGPGGA resultado = new ResultadoComparacaoGPGGA();
-
-        extrairGPGGA_brutas();
-        extrairGPGGA_processadas();
-
-        // FIX ME POR EM OUTRO LUGAR
-        
+        // FIX ME POR EM OUTRO LUGAR        
         float valoresLatitude = 0f;
         float valoresLongitude = 0f;
         
@@ -214,6 +173,7 @@ public class Analise {
         JOptionPane.showMessageDialog(null, "RMS da Latitude: " + RMS_Latitude + "\n" +
                                             "RMS da Longitude: " + RMS_Longitude);
         
+        resultado.adicionarRMS((float)RMS_Latitude, (float)RMS_Longitude);
         resultado.calcMediaLatitude();
         resultado.calcMediaLongitude();
         return resultado;
@@ -223,11 +183,15 @@ public class Analise {
         private ArrayList<ComparacaoGPGGA> comparacoes; // FIXME Arrumar os atributos de visibilidade
         float mediaDiffLatitude;
         float mediaDiffLongitude;
+        private float RMSlatitude;
+        private float RMSlongitude;
                 
         public ResultadoComparacaoGPGGA(){
             this.comparacoes = new ArrayList<>();
             this.mediaDiffLatitude = 0f;
             this.mediaDiffLongitude = 0f;
+            this.RMSlatitude = 0f;
+            this.RMSlongitude = 0f;
         }
 
         public boolean adicionarComparacao(String UTC, String diffLatitude, String diffLongitude){
@@ -236,6 +200,11 @@ public class Analise {
             ComparacaoGPGGA novaComparacao = new ComparacaoGPGGA(UTC, diffLatitude, diffLongitude);            
             this.getComparacoes().add(novaComparacao);
             return true;
+        }
+        
+        protected void adicionarRMS(float latitudeRMS, float longitudeRMS){
+            this.RMSlatitude = latitudeRMS;
+            this.RMSlongitude = longitudeRMS;
         }
         
         public float getMediaLatitude(){
@@ -296,6 +265,20 @@ public class Analise {
          */
         public ArrayList<ComparacaoGPGGA> getComparacoes() { // TODO ARRUMAR ESSA GAMBIARRA
             return comparacoes;
+        }
+
+        /**
+         * @return the RMSlatitude
+         */
+        public float getRMSlatitude() {
+            return RMSlatitude;
+        }
+
+        /**
+         * @return the RMSlongitude
+         */
+        public float getRMSlongitude() {
+            return RMSlongitude;
         }
     }
 
