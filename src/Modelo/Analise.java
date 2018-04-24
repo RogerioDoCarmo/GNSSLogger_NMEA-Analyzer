@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -121,6 +122,8 @@ public class Analise {
 
     public ResultadoComparacaoGPGGA compararMedicoesGPGGA() {
 
+        compararMedicoesGPGGA_RMS(); // FIXME TIRAR ISSO URGENTE!
+        
         ResultadoComparacaoGPGGA resultado = new ResultadoComparacaoGPGGA();
 
         extrairGPGGA_brutas();
@@ -132,11 +135,14 @@ public class Analise {
                 float diferencaLatitude = 0f;
                 float diferencaLongitude = 0f;
 
-                diferencaLatitude = (1800f * Float.valueOf(medicoesGPGGAbrutas.get(i).split(",")[3]))
-                        - (1800f * Float.valueOf(medicoesGPGGAprocessadas.get(i).split(",")[2]));
+                diferencaLatitude = 
+                        (1800f * Float.valueOf(medicoesGPGGAprocessadas.get(i).split(",")[2])) -
+                        
+                        (1800f * Float.valueOf(medicoesGPGGAbrutas.get(i).split(",")[3]));
 
-                diferencaLongitude = (1800f * Float.valueOf(medicoesGPGGAbrutas.get(i).split(",")[5]))
-                        - (1800f * Float.valueOf(medicoesGPGGAprocessadas.get(i).split(",")[4]));
+                diferencaLongitude = (1800f * Float.valueOf(medicoesGPGGAprocessadas.get(i).split(",")[4]))
+                        - (1800f * Float.valueOf(medicoesGPGGAbrutas.get(i).split(",")[5]));
+                
 
                 resultado.adicionarComparacao(medicoesGPGGAbrutas.get(i).split(",")[2],
                                                      String.valueOf(diferencaLatitude),
@@ -153,6 +159,66 @@ public class Analise {
         return resultado;
     }
 
+    public ResultadoComparacaoGPGGA compararMedicoesGPGGA_RMS() {
+
+        ResultadoComparacaoGPGGA resultado = new ResultadoComparacaoGPGGA();
+
+        extrairGPGGA_brutas();
+        extrairGPGGA_processadas();
+
+        // FIX ME POR EM OUTRO LUGAR
+        
+        float valoresLatitude = 0f;
+        float valoresLongitude = 0f;
+        
+        int i = 0;
+        while (i < medicoesGPGGAbrutas.size()) {
+            try {
+                float diferencaLatitude = 0f;
+                float diferencaLongitude = 0f;
+
+                diferencaLatitude = 
+                        (1800f * Float.valueOf(medicoesGPGGAprocessadas.get(i).split(",")[2])) -
+                        
+                        (1800f * Float.valueOf(medicoesGPGGAbrutas.get(i).split(",")[3]));
+
+                diferencaLongitude = (1800f * Float.valueOf(medicoesGPGGAprocessadas.get(i).split(",")[4]))
+                        - (1800f * Float.valueOf(medicoesGPGGAbrutas.get(i).split(",")[5]));
+                
+                
+                
+                // 1 - Quadrado
+                valoresLatitude += diferencaLatitude * diferencaLatitude;
+                valoresLongitude += diferencaLongitude* diferencaLongitude;
+                
+                
+                resultado.adicionarComparacao(medicoesGPGGAbrutas.get(i).split(",")[2],
+                                                     String.valueOf(diferencaLatitude),
+                                                     String.valueOf(diferencaLongitude));
+            } catch (NumberFormatException ex) {
+                System.out.println("Valor não presente na solução pvt!\n"); // FIXME
+                // TODO USAR O MECANISMO DE LOG AQUI
+            }
+            i++;
+        }
+        
+        // 2 - Média
+        valoresLatitude = valoresLatitude/medicoesGPGGAbrutas.size();
+        valoresLongitude = valoresLongitude/medicoesGPGGAbrutas.size();
+        
+        // 3 - Sqrt
+        double RMS_Latitude = Math.sqrt((double)valoresLatitude);
+        double RMS_Longitude = Math.sqrt((double)valoresLongitude);
+        
+        // TODO TIRAR ESSA GAMBIARRA
+        JOptionPane.showMessageDialog(null, "RMS da Latitude: " + RMS_Latitude + "\n" +
+                                            "RMS da Longitude: " + RMS_Longitude);
+        
+        resultado.calcMediaLatitude();
+        resultado.calcMediaLongitude();
+        return resultado;
+    }    
+    
     public class ResultadoComparacaoGPGGA {
         private ArrayList<ComparacaoGPGGA> comparacoes; // FIXME Arrumar os atributos de visibilidade
         float mediaDiffLatitude;
