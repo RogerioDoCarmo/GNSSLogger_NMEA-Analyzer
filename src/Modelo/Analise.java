@@ -130,6 +130,8 @@ public class Analise {
         float valoresLatitude = 0f;
         float valoresLongitude = 0f;
         
+        //TODO REVISAR ESSE MÉTODO, ESTÁ PEGANDO UTCs DIFERENTES
+        
         int i = 0;
         while (i < medicoesGPGGAbrutas.size()) {
             try {
@@ -142,15 +144,15 @@ public class Analise {
                         (1800f * Float.valueOf(medicoesGPGGAbrutas.get(i).split(",")[3]));
 
                 diferencaLongitude = (1800f * Float.valueOf(medicoesGPGGAprocessadas.get(i).split(",")[4]))
-                        - (1800f * Float.valueOf(medicoesGPGGAbrutas.get(i).split(",")[5]));
-                
-                
-                
+                        - (1800f * Float.valueOf(medicoesGPGGAbrutas.get(i).split(",")[5]));               
+               
                 // 1 - Quadrado
                 valoresLatitude += diferencaLatitude * diferencaLatitude;
                 valoresLongitude += diferencaLongitude* diferencaLongitude;
                 
-                
+                System.out.println("UTC ORIGINAL: " + medicoesGPGGAbrutas.get(i).split(",")[2]);
+                System.out.println("UTC PROCESSADO: " + medicoesGPGGAprocessadas.get(i).split(",")[1]);
+                                
                 resultado.adicionarComparacao(medicoesGPGGAbrutas.get(i).split(",")[2],
                                                      String.valueOf(diferencaLatitude),
                                                      String.valueOf(diferencaLongitude));
